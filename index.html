@@ -1,0 +1,1662 @@
+<!DOCTYPE html>
+<html lang="ja" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>物理 1学期期末考査 予想問題 第3回 学習アシスタント</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- MathJax CDN for Beautiful Math Formulas -->
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']],
+        processEscapes: true
+      },
+      options: {
+        skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+      }
+    };
+  </script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#f0f7ff',
+              100: '#e0effe',
+              500: '#3b82f6',
+              600: '#2563eb',
+              700: '#1d4ed8',
+              800: '#1e40af',
+              900: '#1e3a8a',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 3px;
+    }
+    .dark ::-webkit-scrollbar-thumb {
+      background: #475569;
+    }
+    
+    /* Highlight effect for interactive number badges */
+    .num-badge {
+      transition: all 0.2s ease;
+    }
+    .num-badge:active {
+      transform: scale(0.92);
+    }
+    
+    /* Tab transition */
+    .tab-content {
+      display: none;
+    }
+    .tab-content.active {
+      display: block;
+    }
+  </style>
+</head>
+<body class="bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-100 min-h-screen flex flex-col font-sans transition-colors duration-200 pb-16 md:pb-0">
+
+  <!-- Header -->
+  <header class="sticky top-0 z-40 bg-white/90 dark:bg-slate-950/90 backdrop-blur border-b border-slate-200 dark:border-slate-800 shadow-sm">
+    <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+      <div class="flex items-center space-x-2">
+        <div class="w-8 h-8 rounded-lg bg-brand-600 flex items-center justify-center text-white font-bold text-lg shadow-md shadow-brand-500/20">
+          Φ
+        </div>
+        <div>
+          <h1 class="text-sm font-bold tracking-tight md:text-lg">物理2M 期末考査予想 第3回</h1>
+          <p class="text-xs text-slate-500 dark:text-slate-400">高校2年生 モバイル学習アシスタント</p>
+        </div>
+      </div>
+      
+      <div class="flex items-center space-x-2">
+        <!-- Dark Mode Toggle -->
+        <button id="themeToggle" class="p-2 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:ring-2 hover:ring-brand-500 transition" aria-label="テーマ切り替え">
+          <!-- Sun Icon (Light Mode) -->
+          <svg id="sunIcon" class="w-5 h-5 hidden dark:block" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m12.728 0l-.707-.707M6.343 6.343l-.707-.707M12 8a4 4 0 100 8 4 4 0 000-8z"></path></svg>
+          <!-- Moon Icon (Dark Mode) -->
+          <svg id="moonIcon" class="w-5 h-5 block dark:hidden" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Progress Bar & Quick Stats -->
+  <div class="bg-brand-50 dark:bg-slate-950 border-b border-slate-100 dark:border-slate-900 py-2.5 px-4">
+    <div class="max-w-6xl mx-auto flex flex-col md:flex-row md:items-center justify-between gap-2">
+      <div class="flex items-center space-x-4 text-xs">
+        <span class="flex items-center"><span class="w-2.5 h-2.5 rounded-full bg-blue-500 mr-1.5"></span>大問1: <strong id="progCalc" class="ml-1">0/10</strong></span>
+        <span class="flex items-center"><span class="w-2.5 h-2.5 rounded-full bg-green-500 mr-1.5"></span>大問2: <strong id="progMCQ" class="ml-1">0/10</strong></span>
+        <span class="flex items-center"><span class="w-2.5 h-2.5 rounded-full bg-purple-500 mr-1.5"></span>大問3&4: <strong id="progDesc" class="ml-1">0/10</strong></span>
+      </div>
+      <div class="flex items-center space-x-2 flex-1 md:max-w-md">
+        <span class="text-xs text-slate-500 dark:text-slate-400 font-medium whitespace-nowrap">全体進捗:</span>
+        <div class="w-full bg-slate-200 dark:bg-slate-800 h-2 rounded-full overflow-hidden">
+          <div id="totalProgressBar" class="bg-brand-500 h-full w-0 transition-all duration-300"></div>
+        </div>
+        <span id="totalProgressPercent" class="text-xs font-bold text-brand-600 dark:text-brand-400 w-8 text-right">0%</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Content Layout -->
+  <main class="max-w-6xl mx-auto px-4 py-4 flex-1 w-full flex flex-col gap-4">
+    
+    <!-- Tab Navigation (Desktop-like) -->
+    <div class="hidden md:flex space-x-1 bg-slate-200/60 dark:bg-slate-800/60 p-1 rounded-xl">
+      <button class="tab-btn flex-1 py-2.5 px-3 rounded-lg text-sm font-bold transition flex items-center justify-center gap-1.5 active-tab bg-white dark:bg-slate-700 shadow-sm text-brand-600 dark:text-white" data-tab="tab1">
+        大問1: 計算練習
+      </button>
+      <button class="tab-btn flex-1 py-2.5 px-3 rounded-lg text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-slate-900 transition flex items-center justify-center gap-1.5" data-tab="tab2">
+        大問2: 4択演習
+      </button>
+      <button class="tab-btn flex-1 py-2.5 px-3 rounded-lg text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-slate-900 transition flex items-center justify-center gap-1.5" data-tab="tab3">
+        大問3&4: 記述対策
+      </button>
+      <button class="tab-btn flex-1 py-2.5 px-3 rounded-lg text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-slate-900 transition flex items-center justify-center gap-1.5" data-tab="tab4">
+        物理公式集・定数表
+      </button>
+    </div>
+
+    <!-- TAB 1: 大問1 計算練習 (Smart Variable Input Assistant) -->
+    <div id="tab1" class="tab-content active space-y-4">
+      <div class="bg-blue-50 dark:bg-blue-950/40 p-4 rounded-xl border border-blue-100 dark:border-blue-900/50 flex flex-col gap-2">
+        <h3 class="text-sm font-bold text-blue-900 dark:text-blue-300 flex items-center gap-1">
+          <svg class="w-4 h-4 text-blue-500" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"></path></svg>
+          スマート代入アシスタント機能搭載！
+        </h3>
+        <p class="text-xs text-blue-800 dark:text-blue-400 leading-relaxed">
+          問題文の中の <span class="bg-blue-500 text-white font-mono px-1 rounded text-[10px]">青色の数値</span> をタップすると、選択中の数式の変数スロットに自動で入力されます！移動中に数値を打ち込む手間なく、立式の確認と電卓による自動計算が可能です。
+        </p>
+      </div>
+
+      <!-- Problem List & Workspace Container -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-4">
+        <!-- left: Problem Navigator -->
+        <div class="lg:col-span-5 flex flex-col gap-2">
+          <div class="bg-white dark:bg-slate-950 p-3 rounded-xl border border-slate-200 dark:border-slate-800">
+            <span class="text-xs font-bold text-slate-400 uppercase tracking-wider block mb-2">問題を選択</span>
+            <div class="grid grid-cols-5 gap-1.5">
+              <!-- JS will populate these buttons -->
+              <template id="calc-nav-btn-temp">
+                <button class="calc-nav-btn h-10 rounded-lg text-sm font-bold border transition duration-200 relative" data-idx="0">
+                  <span class="btn-lbl">1</span>
+                  <span class="absolute bottom-1 right-1 w-1.5 h-1.5 rounded-full bg-emerald-500 hidden" id="status-dot"></span>
+                </button>
+              </template>
+            </div>
+          </div>
+
+          <!-- Problem Card -->
+          <div class="bg-white dark:bg-slate-950 p-5 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm flex-1 flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between mb-3">
+                <span id="problemCategory" class="text-xs font-bold text-brand-600 dark:text-brand-400 bg-brand-50 dark:bg-brand-950/50 px-2 py-1 rounded">水平投射</span>
+                <span id="problemProgress" class="text-xs font-semibold text-slate-400">問 1 / 10</span>
+              </div>
+              <h2 class="text-base font-bold leading-relaxed mb-4 select-text" id="problemStatement">
+                <!-- HTML will be dynamically inserted here -->
+              </h2>
+            </div>
+
+            <!-- Active Variable Buffer Info -->
+            <div class="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-3 rounded-lg text-xs flex justify-between items-center">
+              <div>
+                <span class="text-slate-400">現在コピーした数値:</span>
+                <span id="bufferedValue" class="font-mono font-bold text-brand-600 dark:text-brand-400 bg-white dark:bg-slate-800 px-1.5 py-0.5 rounded ml-1 border border-slate-200 dark:border-slate-700">-</span>
+              </div>
+              <span class="text-[10px] text-slate-400">数値をタップするとここに保存されます</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- right: Workspace (Formula list & Input fields & Checker) -->
+        <div class="lg:col-span-7 flex flex-col gap-4">
+          <!-- Step 1: Select Formula -->
+          <div class="bg-white dark:bg-slate-950 p-5 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm flex-1 flex flex-col">
+            <span class="text-xs font-bold text-slate-400 uppercase tracking-wider block mb-2">STEP 1: 使用する公式を選択</span>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 max-h-56 overflow-y-auto pr-1" id="calcFormulaList">
+              <!-- JS populated formula cards -->
+            </div>
+
+            <!-- Dynamic Slot Inputs -->
+            <div class="mt-4 p-4 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 flex-1 flex flex-col justify-between">
+              <div>
+                <div class="flex items-center justify-between mb-3">
+                  <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">STEP 2: 変数へ数値を代入 (タップして選択中に入力)</span>
+                  <button id="clearInputsBtn" class="text-xs text-rose-500 hover:underline">入力をクリア</button>
+                </div>
+                
+                <div id="activeFormulaTex" class="text-center py-2 text-lg font-mono text-brand-600 dark:text-brand-400 border-b border-slate-200 dark:border-slate-800 mb-3">
+                  公式を選択してください
+                </div>
+
+                <!-- Input Slots Container -->
+                <div id="variableSlotsContainer" class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                  <!-- JS populated input slots -->
+                </div>
+              </div>
+
+              <!-- Calculator Action -->
+              <div class="mt-4 flex gap-2">
+                <button id="calculateFormulaBtn" class="flex-1 bg-slate-800 dark:bg-slate-700 hover:bg-slate-700 dark:hover:bg-slate-600 text-white py-2.5 rounded-lg text-xs font-bold transition flex items-center justify-center gap-1" disabled>
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path></svg>
+                  式から自動計算 (物理電卓)
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Final Answer Input and Verification -->
+          <div class="bg-white dark:bg-slate-950 p-5 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm">
+            <span class="text-xs font-bold text-slate-400 uppercase tracking-wider block mb-2">STEP 3: 解答を判定（有効数字2桁、単位なし）</span>
+            <div class="flex gap-2">
+              <input type="number" id="calcUserAnswer" placeholder="例: 45 または 1.6" class="flex-1 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 px-4 py-3 rounded-xl font-mono text-base font-bold focus:ring-2 focus:ring-brand-500 focus:outline-none">
+              <button id="verifyAnswerBtn" class="bg-brand-600 hover:bg-brand-700 text-white px-6 rounded-xl text-sm font-bold transition flex items-center gap-1.5 shadow-lg shadow-brand-500/10">
+                <span>解答を送信</span>
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+              </button>
+            </div>
+            
+            <!-- Result Alert Message -->
+            <div id="calcAlertMsg" class="mt-4 p-3 rounded-lg text-sm hidden">
+              <!-- JS inserted messages -->
+            </div>
+          </div>
+
+          <!-- Commentary Accordion -->
+          <div id="calcCommentaryCard" class="bg-white dark:bg-slate-950 p-5 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm hidden">
+            <div class="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-3 mb-3">
+              <h4 class="font-bold text-slate-900 dark:text-white flex items-center gap-1">
+                <svg class="w-4 h-4 text-emerald-500" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                解答・詳細解説
+              </h4>
+              <span id="calcCorrectVal" class="text-sm font-mono font-bold text-emerald-600 bg-emerald-50 dark:bg-emerald-950/50 px-2 py-0.5 rounded">正解: 45 m</span>
+            </div>
+            <div id="calcCommentaryText" class="text-sm leading-relaxed text-slate-600 dark:text-slate-300 space-y-2">
+              <!-- JS inserted LaTeX commentary -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 2: 大問2 4択問題形式 -->
+    <div id="tab2" class="tab-content space-y-4">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-4">
+        <!-- left: MCQ Navigator -->
+        <div class="lg:col-span-4 flex flex-col gap-2">
+          <div class="bg-white dark:bg-slate-950 p-3 rounded-xl border border-slate-200 dark:border-slate-800">
+            <span class="text-xs font-bold text-slate-400 uppercase tracking-wider block mb-2">問題リスト</span>
+            <div class="grid grid-cols-5 gap-1.5">
+              <!-- JS dynamic nav buttons -->
+              <template id="mcq-nav-btn-temp">
+                <button class="mcq-nav-btn h-10 rounded-lg text-sm font-bold border transition duration-200 relative" data-idx="0">
+                  <span class="mcq-btn-lbl">11</span>
+                  <span class="absolute bottom-1 right-1 w-1.5 h-1.5 rounded-full bg-emerald-500 hidden" id="mcq-status-dot"></span>
+                </button>
+              </template>
+            </div>
+          </div>
+
+          <!-- Stats card -->
+          <div class="bg-white dark:bg-slate-950 p-4 rounded-xl border border-slate-200 dark:border-slate-800 text-xs flex justify-between items-center">
+            <span class="text-slate-400 font-medium">大問2 正答数:</span>
+            <span class="font-bold text-emerald-600 dark:text-emerald-400 text-sm bg-emerald-50 dark:bg-emerald-950/30 px-2.5 py-1 rounded-full" id="mcqScoreLabel">0 / 10 正解</span>
+          </div>
+        </div>
+
+        <!-- right: MCQ Card Workspace -->
+        <div class="lg:col-span-8 flex flex-col gap-4">
+          <div class="bg-white dark:bg-slate-950 p-6 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm flex-1 flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between mb-4">
+                <span id="mcqProgress" class="text-xs font-bold text-slate-400">問 11 / 20 (大問2-1)</span>
+                <span class="text-xs font-bold text-slate-500 bg-slate-100 dark:bg-slate-800 px-2 py-1 rounded">各 2点</span>
+              </div>
+              <h2 class="text-base font-bold leading-relaxed mb-6" id="mcqStatement">
+                <!-- MCQ Problem text goes here -->
+              </h2>
+
+              <!-- Choices Grid -->
+              <div class="space-y-3" id="mcqChoicesContainer">
+                <!-- JS Populated Options -->
+              </div>
+            </div>
+
+            <!-- Instant Feedback Message -->
+            <div id="mcqFeedback" class="mt-6 p-4 rounded-xl border hidden transition duration-200">
+              <div class="flex items-start gap-3">
+                <div class="w-6 h-6 rounded-full flex items-center justify-center text-white font-bold flex-shrink-0" id="mcqFeedbackIcon">
+                  ✓
+                </div>
+                <div>
+                  <h4 class="font-bold mb-1" id="mcqFeedbackTitle">正解！</h4>
+                  <p class="text-xs leading-relaxed text-slate-600 dark:text-slate-300" id="mcqFeedbackBody">
+                    解説テキスト...
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 3: 大問3&4 記述問題対策 -->
+    <div id="tab3" class="tab-content space-y-4">
+      <div class="bg-purple-50 dark:bg-purple-950/30 p-4 rounded-xl border border-purple-100 dark:border-purple-900/50 flex flex-col gap-1.5">
+        <h3 class="text-sm font-bold text-purple-900 dark:text-purple-300 flex items-center gap-1">
+          <svg class="w-4 h-4 text-purple-500" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path></svg>
+          思考・記述トレーニングモード
+        </h3>
+        <p class="text-xs text-purple-800 dark:text-purple-400 leading-relaxed">
+          記述問題はスマホで入力する代わりに、**「頭の中でプロセス・途中式をしっかり組み立てる」**か**「ルーズリーフに書き出して」**から、「解答・解説を表示」をタップしてください。採点基準（ルーブリック）を見ながら自分で採点を行いましょう！
+        </p>
+      </div>
+
+      <!-- Problem Group Tabs -->
+      <div class="flex space-x-1 bg-slate-100 dark:bg-slate-800/80 p-1 rounded-lg">
+        <button class="desc-group-btn flex-1 py-1.5 rounded text-xs font-bold transition active-desc-group bg-white dark:bg-slate-700 shadow-sm text-brand-600 dark:text-white" data-group="group3">
+          大問3 (分析・10点)
+        </button>
+        <button class="desc-group-btn flex-1 py-1.5 rounded text-xs font-medium text-slate-600 dark:text-slate-300 hover:text-slate-800 transition" data-group="group4-22">
+          大問4 Q22 (ループ・25点)
+        </button>
+        <button class="desc-group-btn flex-1 py-1.5 rounded text-xs font-medium text-slate-600 dark:text-slate-300 hover:text-slate-800 transition" data-group="group4-23">
+          大問4 Q23 (衝突/円錐・25点)
+        </button>
+      </div>
+
+      <!-- Descriptive Question Container -->
+      <div class="space-y-4" id="descriptiveWorkspace">
+        <!-- JS dynamic render based on selected group -->
+      </div>
+    </div>
+
+    <!-- TAB 4: Datebook (Formula Sheet & Constants) -->
+    <div id="tab4" class="tab-content space-y-4">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <!-- Constants Card -->
+        <div class="bg-white dark:bg-slate-950 p-5 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm md:col-span-1">
+          <h3 class="font-bold text-sm text-slate-400 uppercase tracking-wider mb-4 border-b border-slate-100 dark:border-slate-800 pb-2">
+            物理定数表 (Physical Constants)
+          </h3>
+          <div class="space-y-4 text-sm">
+            <div class="flex items-center justify-between border-b border-slate-50 dark:border-slate-900 pb-2">
+              <span class="font-medium text-slate-500">重力加速度の大きさ $g$</span>
+              <span class="font-mono font-bold">$9.8\text{ m/s}^2$</span>
+            </div>
+            <div class="flex items-center justify-between border-b border-slate-50 dark:border-slate-900 pb-2">
+              <span class="font-medium text-slate-500">万有引力定数 $G$</span>
+              <span class="font-mono font-bold">$6.67 \times 10^{-11}\text{ N}\cdot\text{m}^2/\text{kg}^2$</span>
+            </div>
+            <div class="flex items-center justify-between border-b border-slate-50 dark:border-slate-900 pb-2">
+              <span class="font-medium text-slate-500">水の密度 $\rho$</span>
+              <span class="font-mono font-bold">$1.0 \times 10^3\text{ kg/m}^3$</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Formula Sheet -->
+        <div class="bg-white dark:bg-slate-950 p-5 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm md:col-span-2 space-y-6">
+          <div>
+            <h3 class="font-bold text-sm text-slate-400 uppercase tracking-wider mb-4 border-b border-slate-100 dark:border-slate-800 pb-2">
+              A.1 運動学 (Kinematics)
+            </h3>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
+              <div class="p-3 bg-slate-50 dark:bg-slate-900 rounded-lg flex items-center justify-between">
+                <span class="text-slate-400">速度・時間公式</span>
+                <span class="font-mono font-bold">$v = u + at$</span>
+              </div>
+              <div class="p-3 bg-slate-50 dark:bg-slate-900 rounded-lg flex items-center justify-between">
+                <span class="text-slate-400">変位・時間公式</span>
+                <span class="font-mono font-bold">$s = ut + \frac{1}{2}at^2$</span>
+              </div>
+              <div class="p-3 bg-slate-50 dark:bg-slate-900 rounded-lg flex items-center justify-between">
+                <span class="text-slate-400">速度・位置公式</span>
+                <span class="font-mono font-bold">$v^2 = u^2 + 2as$</span>
+              </div>
+              <div class="p-3 bg-slate-50 dark:bg-slate-900 rounded-lg flex items-center justify-between">
+                <span class="text-slate-400">平均速度による変位</span>
+                <span class="font-mono font-bold">$s = \frac{u+v}{2}t$</span>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <h3 class="font-bold text-sm text-slate-400 uppercase tracking-wider mb-4 border-b border-slate-100 dark:border-slate-800 pb-2">
+              A.2 力と運動量 (Forces and Momentum)
+            </h3>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
+              <div class="p-3 bg-slate-50 dark:bg-slate-900 rounded-lg flex items-center justify-between">
+                <span class="text-slate-400">最大静止摩擦力</span>
+                <span class="font-mono font-bold">$F_f \le \mu_s F_N$</span>
+              </div>
+              <div class="p-3 bg-slate-50 dark:bg-slate-900 rounded-lg flex items-center justify-between">
+                <span class="text-slate-400">動摩擦力</span>
+                <span class="font-mono font-bold">$F_f = \mu_d F_N$</span>
+              </div>
+              <div class="p-3 bg-slate-50 dark:bg-slate-900 rounded-lg flex items-center justify-between">
+                <span class="text-slate-400">運動量</span>
+                <span class="font-mono font-bold">$p = mv$</span>
+              </div>
+              <div class="p-3 bg-slate-50 dark:bg-slate-900 rounded-lg flex items-center justify-between">
+                <span class="text-slate-400">力積</span>
+                <span class="font-mono font-bold">$J = F \Delta t = \Delta p$</span>
+              </div>
+              <div class="p-3 bg-slate-50 dark:bg-slate-900 rounded-lg flex items-center justify-between">
+                <span class="text-slate-400">運動方程式の一般形</span>
+                <span class="font-mono font-bold">$F = ma = \frac{\Delta p}{\Delta t}$</span>
+              </div>
+              <div class="p-3 bg-slate-50 dark:bg-slate-900 rounded-lg flex items-center justify-between">
+                <span class="text-slate-400">向心加速度</span>
+                <span class="font-mono font-bold">$a = \frac{v^2}{r} = \omega^2 r = \frac{4\pi^2 r}{T^2}$</span>
+              </div>
+              <div class="p-3 bg-slate-50 dark:bg-slate-900 rounded-lg flex items-center justify-between">
+                <span class="text-slate-400">等速円運動の速度</span>
+                <span class="font-mono font-bold">$v = \frac{2\pi r}{T} = \omega r$</span>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <h3 class="font-bold text-sm text-slate-400 uppercase tracking-wider mb-4 border-b border-slate-100 dark:border-slate-800 pb-2">
+              A.3 仕事、エネルギー、仕事率
+            </h3>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
+              <div class="p-3 bg-slate-50 dark:bg-slate-900 rounded-lg flex items-center justify-between">
+                <span class="text-slate-400">仕事</span>
+                <span class="font-mono font-bold">$W = Fs \cos\theta$</span>
+              </div>
+              <div class="p-3 bg-slate-50 dark:bg-slate-900 rounded-lg flex items-center justify-between">
+                <span class="text-slate-400">運動エネルギー</span>
+                <span class="font-mono font-bold">$E_k = \frac{1}{2}mv^2 = \frac{p^2}{2m}$</span>
+              </div>
+              <div class="p-3 bg-slate-50 dark:bg-slate-900 rounded-lg flex items-center justify-between">
+                <span class="text-slate-400">重力位置エネルギー</span>
+                <span class="font-mono font-bold">$\Delta E_p = mgh$</span>
+              </div>
+              <div class="p-3 bg-slate-50 dark:bg-slate-900 rounded-lg flex items-center justify-between">
+                <span class="text-slate-400">弾性位置エネルギー</span>
+                <span class="font-mono font-bold">$E_{el} = \frac{1}{2}kx^2$</span>
+              </div>
+              <div class="p-3 bg-slate-50 dark:bg-slate-900 rounded-lg flex items-center justify-between">
+                <span class="text-slate-400">仕事率</span>
+                <span class="font-mono font-bold">$P = \frac{\Delta W}{\Delta t} = Fv$</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Mobile Bottom Tab Navigation -->
+  <div class="fixed bottom-0 left-0 right-0 z-40 bg-white dark:bg-slate-950 border-t border-slate-200 dark:border-slate-800 flex justify-around py-1.5 px-2 md:hidden">
+    <button class="mobile-tab-btn flex-1 flex flex-col items-center justify-center gap-0.5 text-brand-600 dark:text-white" data-tab="tab1">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path></svg>
+      <span class="text-[9px] font-bold">大問1:計算</span>
+    </button>
+    <button class="mobile-tab-btn flex-1 flex flex-col items-center justify-center gap-0.5 text-slate-400 dark:text-slate-500" data-tab="tab2">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"></path></svg>
+      <span class="text-[9px] font-bold">大問2:4択</span>
+    </button>
+    <button class="mobile-tab-btn flex-1 flex flex-col items-center justify-center gap-0.5 text-slate-400 dark:text-slate-500" data-tab="tab3">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
+      <span class="text-[9px] font-bold">大問3&4:記述</span>
+    </button>
+    <button class="mobile-tab-btn flex-1 flex flex-col items-center justify-center gap-0.5 text-slate-400 dark:text-slate-500" data-tab="tab4">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4a2 2 0 012 2v2m0 10a2 2 0 01-2 2h-4a2 2 0 01-2-2m0 0V5"></path></svg>
+      <span class="text-[9px] font-bold">公式/定数</span>
+    </button>
+  </div>
+
+  <!-- JavaScript Logics -->
+  <script>
+    // System Setup
+    const themeToggle = document.getElementById('themeToggle');
+    themeToggle.addEventListener('click', () => {
+      document.documentElement.classList.toggle('dark');
+    });
+
+    // Main App State
+    const AppState = {
+      userProgress: {
+        calc: Array(10).fill(false), // Q1 to Q10 status
+        mcq: Array(10).fill(null),   // Q11 to Q20 user chosen indices
+        desc: {
+          group3: Array(3).fill(false),
+          group4_22: Array(8).fill(false),
+          group4_23: Array(8).fill(false)
+        }
+      },
+      bufferValue: null,
+      selectedSlotId: null,
+      activeCalcIdx: 0,
+      activeCalcFormula: null,
+      activeMcqIdx: 0
+    };
+
+    // Load progress from localStorage if exists
+    if(localStorage.getItem('physics_helper_progress')) {
+      try {
+        AppState.userProgress = JSON.parse(localStorage.getItem('physics_helper_progress'));
+      } catch (e) {
+        console.error("Error parsing progress", e);
+      }
+    }
+
+    function saveProgress() {
+      localStorage.setItem('physics_helper_progress', JSON.stringify(AppState.userProgress));
+      updateProgressUI();
+    }
+
+    // Formulas Data (Formula, fields to input, how to calculate)
+    const formulaSheet = [
+      { id: "f_v_u_at", name: "v = u + at", tex: "v = u + at", vars: ["v", "u", "a", "t"], calc: (inputs) => {
+        let {v, u, a, t} = inputs;
+        if (v===null) return u + a * t;
+        if (u===null) return v - a * t;
+        if (a===null) return (v - u) / t;
+        if (t===null) return (v - u) / a;
+        return null;
+      }},
+      { id: "f_s_ut_half_at2", name: "s = ut + 0.5at²", tex: "s = ut + \\frac{1}{2}at^2", vars: ["s", "u", "a", "t"], calc: (inputs) => {
+        let {s, u, a, t} = inputs;
+        if (s===null) return u * t + 0.5 * a * t * t;
+        if (u===null) return (s - 0.5 * a * t * t) / t;
+        if (a===null) return 2 * (s - u * t) / (t * t);
+        if (t===null) {
+          // quadratic formula
+          if (a === 0) return s / u;
+          let discriminant = u * u + 2 * a * s;
+          if (discriminant < 0) return null;
+          return (-u + Math.sqrt(discriminant)) / a; // positive root
+        }
+        return null;
+      }},
+      { id: "f_v2_u2_2as", name: "v² = u² + 2as", tex: "v^2 = u^2 + 2as", vars: ["v", "u", "a", "s"], calc: (inputs) => {
+        let {v, u, a, s} = inputs;
+        if (v===null) return Math.sqrt(u * u + 2 * a * s);
+        if (u===null) return Math.sqrt(v * v - 2 * a * s);
+        if (a===null) return (v * v - u * u) / (2 * s);
+        if (s===null) return (v * v - u * u) / (2 * a);
+        return null;
+      }},
+      { id: "f_p_mv", name: "p = mv", tex: "p = mv", vars: ["p", "m", "v"], calc: (inputs) => {
+        let {p, m, v} = inputs;
+        if (p===null) return m * v;
+        if (m===null) return p / v;
+        if (v===null) return p / m;
+        return null;
+      }},
+      { id: "f_J_Fdt", name: "J = F * Δt", tex: "J = F \\Delta t", vars: ["J", "F", "dt"], calc: (inputs) => {
+        let {J, F, dt} = inputs;
+        if (J===null) return F * dt;
+        if (F===null) return J / dt;
+        if (dt===null) return J / F;
+        return null;
+      }},
+      { id: "f_Fc_mv2_r", name: "Fc = m * v² / r", tex: "F_c = m\\frac{v^2}{r}", vars: ["Fc", "m", "v", "r"], calc: (inputs) => {
+        let {Fc, m, v, r} = inputs;
+        if (Fc===null) return m * v * v / r;
+        if (m===null) return Fc * r / (v * v);
+        if (v===null) return Math.sqrt(Fc * r / m);
+        if (r===null) return m * v * v / Fc;
+        return null;
+      }},
+      { id: "f_W_Fs_cos", name: "W = F * s * cosθ", tex: "W = F s \\cos\\theta", vars: ["W", "F", "s", "cosVal"], calc: (inputs) => {
+        let {W, F, s, cosVal} = inputs;
+        if (W===null) return F * s * cosVal;
+        if (F===null) return W / (s * cosVal);
+        if (s===null) return W / (F * cosVal);
+        if (cosVal===null) return W / (F * s);
+        return null;
+      }},
+      { id: "f_P_Fv", name: "P = F * v", tex: "P = Fv", vars: ["P", "F", "v"], calc: (inputs) => {
+        let {P, F, v} = inputs;
+        if (P===null) return F * v;
+        if (F===null) return P / v;
+        if (v===null) return P / F;
+        return null;
+      }},
+      { id: "f_Ek_half_mv2", name: "Ek = 0.5 * m * v²", tex: "E_k = \\frac{1}{2}mv^2", vars: ["Ek", "m", "v"], calc: (inputs) => {
+        let {Ek, m, v} = inputs;
+        if (Ek===null) return 0.5 * m * v * v;
+        if (m===null) return 2 * Ek / (v * v);
+        if (v===null) return Math.sqrt(2 * Ek / m);
+        return null;
+      }},
+      { id: "f_Ep_mgh", name: "Ep = mgh", tex: "E_p = mgh", vars: ["Ep", "m", "g", "h"], calc: (inputs) => {
+        let {Ep, m, g, h} = inputs;
+        if (Ep===null) return m * g * h;
+        if (m===null) return Ep / (g * h);
+        if (g===null) return Ep / (m * h);
+        if (h===null) return Ep / (m * g);
+        return null;
+      }},
+      { id: "f_Eel_half_kx2", name: "Eel = 0.5 * k * x²", tex: "E_{el} = \\frac{1}{2}kx^2", vars: ["Eel", "k", "x"], calc: (inputs) => {
+        let {Eel, k, x} = inputs;
+        if (Eel===null) return 0.5 * k * x * x;
+        if (k===null) return 2 * Eel / (x * x);
+        if (x===null) return Math.sqrt(2 * Eel / k);
+        return null;
+      }},
+      { id: "f_T_2pi_omega", name: "T = 2π / ω", tex: "T = \\frac{2\\pi}{\\omega}", vars: ["T", "piVal", "omega"], calc: (inputs) => {
+        let {T, piVal, omega} = inputs;
+        if (T===null) return 2 * piVal / omega;
+        if (omega===null) return 2 * piVal / T;
+        return null;
+      }}
+    ];
+
+    // Q1 to Q10 Dynamic Data
+    const calcQuestions = [
+      {
+        idx: 1,
+        category: "水平投射",
+        statement: "地上高さ <span class='num-badge bg-blue-100 hover:bg-blue-200 dark:bg-blue-950 dark:hover:bg-blue-900 border border-blue-300 dark:border-blue-700 text-blue-800 dark:text-blue-200 px-1.5 py-0.5 rounded cursor-pointer font-mono font-bold text-sm inline-block mx-0.5' data-val='44.1'>44.1</span> mの位置から、小球を水平方向に初速度 <span class='num-badge bg-blue-100 hover:bg-blue-200 dark:bg-blue-950 dark:hover:bg-blue-900 border border-blue-300 dark:border-blue-700 text-blue-800 dark:text-blue-200 px-1.5 py-0.5 rounded cursor-pointer font-mono font-bold text-sm inline-block mx-0.5' data-val='15'>15</span> m/sで投げ出した。小球が地面に達するまでに、水平方向に進む距離 [m] を求めよ。 (重力加速度 <span class='num-badge bg-blue-100 hover:bg-blue-200 dark:bg-blue-950 dark:hover:bg-blue-900 border border-blue-300 dark:border-blue-700 text-blue-800 dark:text-blue-200 px-1.5 py-0.5 rounded cursor-pointer font-mono font-bold text-sm inline-block mx-0.5' data-val='9.8'>9.8</span> m/s²)",
+        targetValue: 45,
+        unit: "m",
+        commentary: "鉛直方向は初速度 $0\\text{ m/s}$、加速度 $g=9.8\\text{ m/s}^2$ の自由落下運動を行います。<br>地面に達する時間 $t\\text{ [s]}$ は：<br>$$y = \\frac{1}{2}gt^2 \\Rightarrow 44.1 = \\frac{1}{2} \\times 9.8 \\times t^2$$<br>$$4.9t^2 = 44.1 \\Rightarrow t^2 = 9.0 \\Rightarrow t = 3.0\\text{ s}$$<br>水平方向は等速直線運動を行うため、求める水平距離 $x\\text{ [m]}$ は：<br>$$x = v_0 t = 15 \\times 3.0 = 45\\text{ m}$$"
+      },
+      {
+        idx: 2,
+        category: "力積",
+        statement: "質量 <span class='num-badge bg-blue-100 hover:bg-blue-200 dark:bg-blue-950 dark:hover:bg-blue-900 border border-blue-300 dark:border-blue-700 text-blue-800 dark:text-blue-200 px-1.5 py-0.5 rounded cursor-pointer font-mono font-bold text-sm inline-block mx-0.5' data-val='0.40'>0.40</span> kgのサッカーボールが、水平方向に速さ <span class='num-badge bg-blue-100 hover:bg-blue-200 dark:bg-blue-950 dark:hover:bg-blue-900 border border-blue-300 dark:border-blue-700 text-blue-800 dark:text-blue-200 px-1.5 py-0.5 rounded cursor-pointer font-mono font-bold text-sm inline-block mx-0.5' data-val='20'>20</span> m/sで選手に向かって飛んできた。選手がこのボールをキックし、真逆の方向に速さ <span class='num-badge bg-blue-100 hover:bg-blue-200 dark:bg-blue-950 dark:hover:bg-blue-900 border border-blue-300 dark:border-blue-700 text-blue-800 dark:text-blue-200 px-1.5 py-0.5 rounded cursor-pointer font-mono font-bold text-sm inline-block mx-0.5' data-val='25'>25</span> m/sで蹴り返した。このときボールが受けた力積の大きさ $J\\text{ [N}\\cdot\\text{s]}$ を求めよ。",
+        targetValue: 18,
+        unit: "N・s",
+        commentary: "選手に向かう当初の向きを正とします。<br>・衝突前の速度: $u = +20\\text{ m/s}$<br>・衝突後の速度: $v = -25\\text{ m/s}$<br>力積 $J$ と運動量の変化量の関係より：<br>$$J = mv - mu = 0.40 \\times (-25) - 0.40 \\times 20 = -10 - 8.0 = -18\\text{ N}\\cdot\\text{s}$$<br>力積の大きさ（絶対値）を求めるため、答は $18\\text{ N}\\cdot\\text{s}$ です。"
+      },
+      {
+        idx: 3,
+        category: "仕事",
+        statement: "粗い水平面上の木箱に、水平面から $30^\\circ$ 上向きに <span class='num-badge bg-blue-100 hover:bg-blue-200 dark:bg-blue-950 dark:hover:bg-blue-900 border border-blue-300 dark:border-blue-700 text-blue-800 dark:text-blue-200 px-1.5 py-0.5 rounded cursor-pointer font-mono font-bold text-sm inline-block mx-0.5' data-val='50'>50</span> Nの一定の力を加え続け、木箱を力の水平成分の向きに <span class='num-badge bg-blue-100 hover:bg-blue-200 dark:bg-blue-950 dark:hover:bg-blue-900 border border-blue-300 dark:border-blue-700 text-blue-800 dark:text-blue-200 px-1.5 py-0.5 rounded cursor-pointer font-mono font-bold text-sm inline-block mx-0.5' data-val='6.0'>6.0</span> m移動させた。この力が木箱にした仕事 $W\\text{ [J]}$ を求めよ。 ($\\cos 30^\\circ = $ <span class='num-badge bg-blue-100 hover:bg-blue-200 dark:bg-blue-950 dark:hover:bg-blue-900 border border-blue-300 dark:border-blue-700 text-blue-800 dark:text-blue-200 px-1.5 py-0.5 rounded cursor-pointer font-mono font-bold text-sm inline-block mx-0.5' data-val='0.87'>0.87</span> とする)",
+        targetValue: 260,
+        unit: "J",
+        commentary: "力と移動方向がなす角が $\\theta$ のとき、仕事 $W$ は次式で与えられます：<br>$$W = Fs\\cos\\theta$$<br>数値を代入すると：<br>$$W = 50 \\times 6.0 \\times 0.87 = 261\\text{ J}$$<br>有効数字2桁で表すと $2.6 \\times 10^2\\text{ J}$（または $260\\text{ J}$）です。"
+      },
+      {
+        idx: 4,
+        category: "等速円運動",
+        statement: "質量 <span class='num-badge bg-blue-100 hover:bg-blue-200 dark:bg-blue-950 dark:hover:bg-blue-900 border border-blue-300 dark:border-blue-700 text-blue-800 dark:text-blue-200 px-1.5 py-0.5 rounded cursor-pointer font-mono font-bold text-sm inline-block mx-0.5' data-val='0.20'>0.20</span> kgの小石をひもの先に結び、半径 <span class='num-badge bg-blue-100 hover:bg-blue-200 dark:bg-blue-950 dark:hover:bg-blue-900 border border-blue-300 dark:border-blue-700 text-blue-800 dark:text-blue-200 px-1.5 py-0.5 rounded cursor-pointer font-mono font-bold text-sm inline-block mx-0.5' data-val='2.0'>2.0</span> mの水平な円軌道上で、速さ <span class='num-badge bg-blue-100 hover:bg-blue-200 dark:bg-blue-950 dark:hover:bg-blue-900 border border-blue-300 dark:border-blue-700 text-blue-800 dark:text-blue-200 px-1.5 py-0.5 rounded cursor-pointer font-mono font-bold text-sm inline-block mx-0.5' data-val='6.0'>6.0</span> m/sで等速円運動させた。ひもが小石を引く向心力の大きさ $F_c\\text{ [N]}$ を求めよ。",
+        targetValue: 3.6,
+        unit: "N",
+        commentary: "向心力 $F_c$ の大きさは次式になります：<br>$$F_c = m\\frac{v^2}{r}$$<br>値を代入すると：<br>$$F_c = 0.20 \\times \\frac{6.0^2}{2.0} = 0.20 \\times 18 = 3.6\\text{ N}$$"
+      },
+      {
+        idx: 5,
+        category: "仕事率",
+        statement: "モーターを用いて、質量 <span class='num-badge bg-blue-100 hover:bg-blue-200 dark:bg-blue-950 dark:hover:bg-blue-900 border border-blue-300 dark:border-blue-700 text-blue-800 dark:text-blue-200 px-1.5 py-0.5 rounded cursor-pointer font-mono font-bold text-sm inline-block mx-0.5' data-val='500'>500</span> kgの荷物を、一定の速度 <span class='num-badge bg-blue-100 hover:bg-blue-200 dark:bg-blue-950 dark:hover:bg-blue-900 border border-blue-300 dark:border-blue-700 text-blue-800 dark:text-blue-200 px-1.5 py-0.5 rounded cursor-pointer font-mono font-bold text-sm inline-block mx-0.5' data-val='0.80'>0.80</span> m/sで鉛直上向きに引き上げている。このときモーターがする仕事の仕事率 $P\\text{ [W]}$ を求めよ。 (重力加速度 <span class='num-badge bg-blue-100 hover:bg-blue-200 dark:bg-blue-950 dark:hover:bg-blue-900 border border-blue-300 dark:border-blue-700 text-blue-800 dark:text-blue-200 px-1.5 py-0.5 rounded cursor-pointer font-mono font-bold text-sm inline-block mx-0.5' data-val='9.8'>9.8</span> m/s²)",
+        targetValue: 3900,
+        unit: "W",
+        commentary: "一定速度で引き上げるため、モーターの引力 $F$ は、荷物の受ける重力 $mg$ と釣り合っています：<br>$$F = mg = 500 \\times 9.8 = 4900\\text{ N}$$<br>仕事率 $P$ は、力と速度の積で表されます：<br>$$P = Fv = 4900 \\times 0.80 = 3920\\text{ W}$$<br>有効数字2桁で表すと $3.9 \\times 10^3\\text{ W}$（または $3900\\text{ W}$）です。"
+      },
+      {
+        idx: 6,
+        category: "自由落下",
+        statement: "高いビルの屋上から小球を静かに手放した(自由落下)。落下開始から地面に達する直前までの時間は <span class='num-badge bg-blue-100 hover:bg-blue-200 dark:bg-blue-950 dark:hover:bg-blue-900 border border-blue-300 dark:border-blue-700 text-blue-800 dark:text-blue-200 px-1.5 py-0.5 rounded cursor-pointer font-mono font-bold text-sm inline-block mx-0.5' data-val='2.5'>2.5</span> sであった。地面に達する直前の小球の速さ $v\\text{ [m/s]}$ を求めよ。 (重力加速度 <span class='num-badge bg-blue-100 hover:bg-blue-200 dark:bg-blue-950 dark:hover:bg-blue-900 border border-blue-300 dark:border-blue-700 text-blue-800 dark:text-blue-200 px-1.5 py-0.5 rounded cursor-pointer font-mono font-bold text-sm inline-block mx-0.5' data-val='9.8'>9.8</span> m/s²)",
+        targetValue: 25,
+        unit: "m/s",
+        commentary: "自由落下の速度公式 $v = gt$ より：<br>$$v = 9.8 \\times 2.5 = 24.5\\text{ m/s}$$<br>有効数字2桁で表すと $25\\text{ m/s}$ です。"
+      },
+      {
+        idx: 7,
+        category: "運動エネルギー",
+        statement: "質量 <span class='num-badge bg-blue-100 hover:bg-blue-200 dark:bg-blue-950 dark:hover:bg-blue-900 border border-blue-300 dark:border-blue-700 text-blue-800 dark:text-blue-200 px-1.5 py-0.5 rounded cursor-pointer font-mono font-bold text-sm inline-block mx-0.5' data-val='60'>60</span> kgの陸上選手が、平坦なトラックを一定の速さ <span class='num-badge bg-blue-100 hover:bg-blue-200 dark:bg-blue-950 dark:hover:bg-blue-900 border border-blue-300 dark:border-blue-700 text-blue-800 dark:text-blue-200 px-1.5 py-0.5 rounded cursor-pointer font-mono font-bold text-sm inline-block mx-0.5' data-val='5.0'>5.0</span> m/sで走っている。この選手が持つ運動エネルギー $K\\text{ [J]}$ を求めよ。",
+        targetValue: 750,
+        unit: "J",
+        commentary: "運動エネルギー $K$ の公式：<br>$$K = \\frac{1}{2}mv^2$$<br>数値を代入すると：<br>$$K = \\frac{1}{2} \\times 60 \\times (5.0)^2 = 30 \\times 25 = 750\\text{ J}$$"
+      },
+      {
+        idx: 8,
+        category: "弾性エネルギー",
+        statement: "ばね定数 <span class='num-badge bg-blue-100 hover:bg-blue-200 dark:bg-blue-950 dark:hover:bg-blue-900 border border-blue-300 dark:border-blue-700 text-blue-800 dark:text-blue-200 px-1.5 py-0.5 rounded cursor-pointer font-mono font-bold text-sm inline-block mx-0.5' data-val='500'>500</span> N/mの軽いばねを、自然の長さから <span class='num-badge bg-blue-100 hover:bg-blue-200 dark:bg-blue-950 dark:hover:bg-blue-900 border border-blue-300 dark:border-blue-700 text-blue-800 dark:text-blue-200 px-1.5 py-0.5 rounded cursor-pointer font-mono font-bold text-sm inline-block mx-0.5' data-val='0.080'>0.080</span> mだけ押し縮めた。このときばねに蓄えられている弾性位置エネルギー $U\\text{ [J]}$ を求めよ。",
+        targetValue: 1.6,
+        unit: "J",
+        commentary: "弾性位置エネルギー $U$ の公式：<br>$$U = \\frac{1}{2}kx^2$$<br>数値を代入すると：<br>$$U = \\frac{1}{2} \\times 500 \\times (0.080)^2 = 250 \\times 0.0064 = 1.6\\text{ J}$$"
+      },
+      {
+        idx: 9,
+        category: "円運動の周期",
+        statement: "半径 <span class='num-badge bg-blue-100 hover:bg-blue-200 dark:bg-blue-950 dark:hover:bg-blue-900 border border-blue-300 dark:border-blue-700 text-blue-800 dark:text-blue-200 px-1.5 py-0.5 rounded cursor-pointer font-mono font-bold text-sm inline-block mx-0.5' data-val='3.0'>3.0</span> mの円形のコースを、物体が一定の角速度 $\\omega = $ <span class='num-badge bg-blue-100 hover:bg-blue-200 dark:bg-blue-950 dark:hover:bg-blue-900 border border-blue-300 dark:border-blue-700 text-blue-800 dark:text-blue-200 px-1.5 py-0.5 rounded cursor-pointer font-mono font-bold text-sm inline-block mx-0.5' data-val='2.0'>2.0</span> rad/sで等速円運動している。この物体の回転の周期 $T\\text{ [s]}$ を求めよ。 ($\\pi = $ <span class='num-badge bg-blue-100 hover:bg-blue-200 dark:bg-blue-950 dark:hover:bg-blue-900 border border-blue-300 dark:border-blue-700 text-blue-800 dark:text-blue-200 px-1.5 py-0.5 rounded cursor-pointer font-mono font-bold text-sm inline-block mx-0.5' data-val='3.14'>3.14</span> とする)",
+        targetValue: 3.1,
+        unit: "s",
+        commentary: "等速円運動の周期 $T$ は、角速度 $\\omega$ を用いて次のように表されます：<br>$$T = \\frac{2\\pi}{\\omega}$$<br>数値を代入すると：<br>$$T = \\frac{2 \\times 3.14}{2.0} = 3.14\\text{ s}$$<br>有効数字2桁で表すと $3.1\\text{ s}$ です。(※半径の情報は周期の算出には直接使用しません。)"
+      },
+      {
+        idx: 10,
+        category: "運動量",
+        statement: "質量 <span class='num-badge bg-blue-100 hover:bg-blue-200 dark:bg-blue-950 dark:hover:bg-blue-900 border border-blue-300 dark:border-blue-700 text-blue-800 dark:text-blue-200 px-1.5 py-0.5 rounded cursor-pointer font-mono font-bold text-sm inline-block mx-0.5' data-val='0.030'>0.030</span> kgの矢が、水平方向に速さ <span class='num-badge bg-blue-100 hover:bg-blue-200 dark:bg-blue-950 dark:hover:bg-blue-900 border border-blue-300 dark:border-blue-700 text-blue-800 dark:text-blue-200 px-1.5 py-0.5 rounded cursor-pointer font-mono font-bold text-sm inline-block mx-0.5' data-val='80'>80</span> m/sで飛んでいる。この矢の運動量の大きさ $p\\text{ [kg}\\cdot\\text{m/s]}$ を求めよ。",
+        targetValue: 2.4,
+        unit: "kg・m/s",
+        commentary: "運動量の大きさ $p$ の公式：<br>$$p = mv$$<br>数値を代入すると：<br>$$p = 0.030 \\times 80 = 2.4\\text{ kg}\\cdot\\text{m/s}$$"
+      }
+    ];
+
+    // MCQ Data (Questions 11 to 20)
+    const mcqQuestions = [
+      {
+        idx: 11,
+        statement: "水平投射において、同じ高さから小球を水平方向に投げ出すとき、初速度の大きさを 3 倍にすると、着地するまでの時間（滞空時間）は最初の何倍になるか。",
+        choices: [
+          "1 倍（変わらない）",
+          "√3 倍",
+          "3 倍",
+          "9 倍"
+        ],
+        answerIdx: 0,
+        explanation: "水平投射における滞空時間 $t$ は、鉛直方向の自由落下の関係式 $y = \\frac{1}{2}gt^2$ から決定されるため、落下の高さのみに依存し、水平方向の初速度には依存しません。よって1倍（不変）です。"
+      },
+      {
+        idx: 12,
+        statement: "物体に作用する力 F とその作用時間 t の関係を示す F-t グラフがある。このグラフの最確線と時間軸によって囲まれた部分の面積が表す物理量はどれか。",
+        choices: [
+          "仕事",
+          "運動エネルギー",
+          "仕事率",
+          "力積"
+        ],
+        answerIdx: 3,
+        explanation: "力 $F$ と時間 $t$ の積 $\\int F dt$ すなわち、グラフの線と時間軸で囲まれる面積は「力積（Impulse）」を表します。力積は運動量の変化量に等しい量です。"
+      },
+      {
+        idx: 13,
+        statement: "ある軽いばねを自然長から x だけ縮めるために必要な仕事を W とする。ここからさらに縮めて、自然長からの縮みを 2x にするとき、全体で必要な仕事はいくらか。",
+        choices: [
+          "2W",
+          "3W",
+          "4W",
+          "8W"
+        ],
+        answerIdx: 2,
+        explanation: "ばねに蓄えられる弾性位置エネルギーは、変位の二乗に比例します（$U_{el} = \\frac{1}{2}kx^2$）。自然長からの縮みが $2x$ になると、蓄えられる全エネルギーは $2^2 = 4$ 倍になります。外力がする仕事の総量はこれに等しいため、必要な仕事は $4W$ となります。"
+      },
+      {
+        idx: 14,
+        statement: "回転するターンテーブルの上に置かれた小さなコインが、テーブルに対して滑らずに等速円運動を行っている。このとき、コインを回転中心に向かって引きつける向心力の役割を果たしている力はどれか。",
+        choices: [
+          "重力",
+          "テーブルからの垂直抗力",
+          "静止摩擦力",
+          "動摩擦力"
+        ],
+        answerIdx: 2,
+        explanation: "コインはテーブルに対して滑らずに静止した状態で等速円運動しています。このとき、コインが滑り出すのを防ぐ向き（中心向き）に作用する「静止摩擦力」が向心力としての役割を果たしています。"
+      },
+      {
+        idx: 15,
+        statement: "摩擦のある水平なレール上で、2台の台車が正面衝突した。衝突の前後において、これら2台の台車からなる「物体系」の全運動量が保存されるための条件として、正しいものはどれか。",
+        choices: [
+          "衝突が弾性衝突（反発係数 e = 1）であること。",
+          "衝突が短い時間で行われ、外部から加わる力（動摩擦力など）の影響が無視できること。",
+          "台車の質量がそれぞれ等しいこと。",
+          "衝突後に2台の台車が合体して一体となって進むこと。"
+        ],
+        answerIdx: 1,
+        explanation: "衝突時の相互作用は非常に短い時間（$\\Delta t \\approx 0$）で行われます。この極めて短い時間内では、外部から受ける動摩擦力などの外力による力積は無視できるほど小さくなります。そのため、衝突の前後において全運動量が保存されているとみなすことができます。"
+      },
+      {
+        idx: 16,
+        statement: "粗い床の上を滑って減速している物体に作用する「動摩擦力」が、物体に対して行う仕事の符号と性質について、最も適切な説明はどれか。",
+        choices: [
+          "移動方向と同じ向きに働くため、常に正の仕事をする。",
+          "移動方向と直交する向きに働くため、仕事をしない（0 J）。",
+          "移動方向と常に逆向きに働くため、常に負の仕事をする。",
+          "物体の質量によって、仕事の正負が変化する。"
+        ],
+        answerIdx: 2,
+        explanation: "動摩擦力は物体の運動を妨げる（移動方向と逆の）向きに作用します。仕事の定義 $W = Fs \\cos\\theta$ において、なす角が $180^\\circ$（$\\cos 180^\\circ = -1$）となるため、動摩擦力がする仕事は常に負となります。"
+      },
+      {
+        idx: 17,
+        statement: "質量が一定の物体の運動量が 2 倍になったとき、その物体の運動エネルギーは何倍になるか。",
+        choices: [
+          "√2 倍",
+          "2 倍",
+          "4 倍",
+          "8 倍"
+        ],
+        answerIdx: 2,
+        explanation: "運動エネルギー $K$ と運動量 $p$ の関係式は $K = \\frac{p^2}{2m}$ です。質量 $m$ が一定のとき、運動量 $p$ が 2 倍になると、その二乗である 4 倍に運動エネルギーは増加します。"
+      },
+      {
+        idx: 18,
+        statement: "2球の非弾性衝突（反発係数 e < 1）において、衝突前後で全体の力学的エネルギーの一部が失われる。この失われたエネルギーの主な行方として最も適切な説明はどれか。",
+        choices: [
+          "万有引力エネルギーとして空間に蓄えられる。",
+          "熱エネルギー、音、あるいは物体の変形のためのエネルギーに変換される。",
+          "化学ポテンシャルエネルギーとして物体内部に蓄積される。",
+          "宇宙のダークエネルギーに変換され消滅する。"
+        ],
+        answerIdx: 1,
+        explanation: "非弾性衝突（$e < 1$）では、運動エネルギーの一部が、衝突時に物体が永久変形するための仕事や、接触面の摩擦熱、衝突音（音エネルギー）となって周囲へ散逸します。"
+      },
+      {
+        idx: 19,
+        statement: "等速円運動において、向心力が物体にする物理的な仕事について、正しいものはどれか。",
+        choices: [
+          "向心力と速度ベクトルの方向が常に垂直であるため、常に 0 J である。",
+          "円を1周するごとに、向心力による仕事が累積して増加する。",
+          "向心力は中心を向くため、中心方向へ引き込む正の仕事をする。",
+          "向心力は等速運動を維持するために負の仕事をする。"
+        ],
+        answerIdx: 0,
+        explanation: "等速円運動では、向心力の作用する向き（円の中心向き）と、物体の瞬間的な移動方向（接線方向）が常に直交（なす角 $90^\\circ$）しています。$W = Fs \\cos 90^\\circ = 0\\text{ J}$ となるため、向心力がする仕事は常に 0 J です。"
+      },
+      {
+        idx: 20,
+        statement: "不確かさ（絶対誤差）を伴う2つの測定値 A ± ΔA と B ± ΔB がある。この2つの測定値の積 Y = A × B を計算したとき、Y の相対不確かさ ΔY/Y を表す正しい式はどれか。",
+        choices: [
+          "ΔA × ΔB",
+          "ΔA/A + ΔB/B",
+          "sqrt(ΔA² + ΔB²)",
+          "ΔA/A × ΔB/B"
+        ],
+        answerIdx: 1,
+        explanation: "測定値の掛け算または割り算における不確かさの伝播規則では、最終算出値の「相対不確かさ」は、それぞれの測定値の相対不確かさの単純な和となります。"
+      }
+    ];
+
+    // Descriptive & Applied Questions (Paper1-b & Paper2)
+    const descriptiveQuestions = {
+      group3: [
+        {
+          q: "(a) 仕事とエネルギーの関係（または運動力学）を用いて、動摩擦係数 $\\mu_d$ を初速度 $u$、滑った距離 $s$、および重力加速度 $g$ で表す公式を導出しなさい。また、この式から、なぜ木箱の質量 $m$ が停止距離に影響を及ぼさないのかを物理的に説明しなさい。",
+          points: 3,
+          ans: "<b>公式:</b> $\\mu_d = \\frac{u^2}{2gs}$<br><b>説明:</b> 木箱にかかる動摩擦力は $f = \\mu_d mg$ であり、動摩擦力のする仕事は $W = -f \\cdot s = -\\mu_d mgs$ です。<br>仕事とエネルギーの関係式より、運動エネルギーの変化量は仕事に等しいため：<br>$$\\Delta K = W_f \\Rightarrow 0 - \\frac{1}{2}mu^2 = -\\mu_d mgs \\Rightarrow \\frac{1}{2}mu^2 = \\mu_d mgs$$<br>この式の両辺から質量 $m$ が相殺されます。これは、「質量が増えると慣性が大きくなり止まりにくくなる効果（$\\frac{1}{2}mu^2$）」と、「垂直抗力が増えてブレーキ力である動摩擦力（$\\mu_d mgs$）が大きくなる効果」が完全に相殺されるためです。よって質量は停止距離に影響を及ぼしません。",
+          rubric: [
+            { desc: "仕事とエネルギーの関係式を質量 m を含めて立式している", pts: 1 },
+            { desc: "m を正しく消去し、公式 μ_d = u² / (2gs) を導出している", pts: 1 },
+            { desc: "慣性の増加と動摩擦力の増加が完全に相殺される物理的理由を説明している", pts: 1 }
+          ]
+        },
+        {
+          q: "(b) 理論値の重力加速度 $g = 9.8\\text{ m/s}^2$ を用いて、この実験データから算出される動摩擦係数 $\\mu_d$ の値を計算しなさい。",
+          points: 3,
+          ans: "<b>正解:</b> $\\mu_d = 0.38$<br><b>計算プロセス:</b><br>導出した公式に、実験データ（$u = 3.0\\text{ m/s}$, $s = 1.20\\text{ m}$, $g = 9.8\\text{ m/s}^2$）を代入します。<br>$$\\mu_d = \\frac{3.0^2}{2 \\times 9.8 \\times 1.20} = \\frac{9.0}{23.52} \\approx 0.3826$$<br>有効数字2桁で表すと、動摩擦係数 $\\mu_d = 0.38$ となります（摩擦係数に単位はありません）。",
+          rubric: [
+            { desc: "公式に実験数値を正しく代入している", pts: 1.5 },
+            { desc: "有効数字2桁を考慮し、正しい数値 0.38 を導出している（単位がないことも適切）", pts: 1.5 }
+          ]
+        },
+        {
+          q: "(c) 動摩擦係数 $\\mu_d$ の相対不確かさの伝播式を用いて $\\mu_d$ の絶対不確かさ $\\Delta \\mu_d$ を求め、最終的な測定結果を $\\mu_d \\pm \\Delta \\mu_d$ の形で示しなさい。",
+          points: 4,
+          ans: "<b>正解:</b> $\\mu_d \\pm \\Delta \\mu_d = 0.38 \\pm 0.04$<br><b>不確かさの計算:</b><br>伝播式に各測定値と不確かさ（$u = 3.0 \\pm 0.1$, $s = 1.20 \\pm 0.04$）を代入します：<br>$$\\frac{\\Delta \\mu_d}{\\mu_d} = 2\\frac{\\Delta u}{u} + \\frac{\\Delta s}{s} = 2 \\times \\left(\\frac{0.1}{3.0}\\right) + \\frac{0.04}{1.20} = \\frac{0.2}{3.0} + \\frac{0.1}{3.0} = \\frac{0.3}{3.0} = 0.10 \\quad (10\\%)$$<br>相対不確かさは $0.10$ となります。<br>これより、絶対不確かさ $\\Delta \\mu_d$ は：<br>$$\\Delta \\mu_d = \\mu_d \\times 0.10 = 0.38 \\times 0.10 = 0.038 \\approx 0.04$$<br>（不確かさは有効数字1桁、または測定値の末尾桁にそろえて丸めるため 0.04 とします）<br>よって、最終表記は $0.38 \\pm 0.04$ となります。",
+          rubric: [
+            { desc: "相対不確かさの合計が 0.10 (10%) になることを正しく計算している", pts: 2 },
+            { desc: "絶対不確かさ Δμ_d = 0.04 を適切に導出・丸めている", pts: 1 },
+            { desc: "測定結果を μ_d ± Δμ_d = 0.38 ± 0.04 の正しい形式で提示している", pts: 1 }
+          ]
+        }
+      ],
+      group4_22: [
+        {
+          q: "Q22-(a)(i) 手放す直前において、ばねに蓄えられている弾性位置エネルギー $E_{el}\\text{ [J]}$ を求めよ。",
+          points: 2,
+          ans: "<b>正解:</b> $13\\text{ J}$（または $12.5\\text{ J}$）<br><b>計算プロセス:</b><br>弾性位置エネルギーの公式 $E_{el} = \\frac{1}{2}kx^2$ を用います。<br>$k = 400\\text{ N/m}$、 $x = 0.25\\text{ m}$ を代入すると：<br>$$E_{el} = \\frac{1}{2} \\times 400 \\times (0.25)^2 = 200 \\times 0.0625 = 12.5\\text{ J}$$<br>有効数字2桁に丸めると $13\\text{ J}$ です。",
+          rubric: [
+            { desc: "公式の提示と数値の代入を正しく行っている", pts: 1 },
+            { desc: "計算を実行し、12.5 J または 13 J（単位含む）を導出している", pts: 1 }
+          ]
+        },
+        {
+          q: "Q22-(a)(ii) 小物体がばねから離れた直後（水平面上を動いているとき）の速さ $v_0\\text{ [m/s]}$ を求めよ。",
+          points: 4,
+          ans: "<b>正解:</b> $7.1\\text{ m/s}$（または $7.07\\text{ m/s}$）<br><b>計算プロセス:</b><br>水平面上は摩擦がないため、力学的エネルギー保存則により、ばねの弾性位置エネルギーがすべて小物体の運動エネルギーに変換されます。<br>$$\\frac{1}{2}mv_0^2 = E_{el} \\Rightarrow \\frac{1}{2} \\times 0.50 \\times v_0^2 = 12.5$$<br>$$0.25 v_0^2 = 12.5 \\Rightarrow v_0^2 = 50.0 \\Rightarrow v_0 = \\sqrt{50.0} \\approx 7.07\\text{ m/s}$$<br>有効数字2桁に丸めると $7.1\\text{ m/s}$ です。",
+          rubric: [
+            { desc: "エネルギー保存則の式 (0.5 * m * v0² = Eel) を正しく立式している", pts: 2 },
+            { desc: "平方根を展開して正しく計算している", pts: 1 },
+            { desc: "正しい最終速度 7.1 m/s (単位含む) を導出している", pts: 1 }
+          ]
+        },
+        {
+          q: "Q22-(b)(i) 小物体が円形ループを上昇する際に行われている、力学的エネルギーの変換プロセスについて説明しなさい。",
+          points: 2,
+          ans: "<b>模範解答:</b><br>小物体が円形ループを上昇するにつれて、小物体が持っていた「<b>運動エネルギー</b>」が、重力による「<b>重力の位置エネルギー</b>」へと変換されます。最高点に達したときに位置エネルギーが最大となり、運動エネルギーは最小になりますが、それらの和（全力学的エネルギー）は一定に保たれます。",
+          rubric: [
+            { desc: "運動エネルギーから重力位置エネルギーへの変換を記述している", pts: 2 }
+          ]
+        },
+        {
+          q: "Q22-(b)(ii) 小物体がループの最高点（地上からの高さ $h = 2R = 0.80\\text{ m}$）を通過する瞬間の速さ $v_{top}\\text{ [m/s]}$ を、力学的エネルギー保存則を用いて求めよ。",
+          points: 4,
+          ans: "<b>正解:</b> $5.9\\text{ m/s}$（または $5.86\\text{ m/s}$）<br><b>計算プロセス:</b><br>全力学的エネルギー $12.5\\text{ J}$ は最高点でも保存されます。<br>$$E_{total} = \\frac{1}{2}mv_{top}^2 + mgh$$<br>$$12.5 = \\frac{1}{2} \\times 0.50 \\times v_{top}^2 + 0.50 \\times 9.8 \\times 0.80$$<br>$$12.5 = 0.25v_{top}^2 + 3.92 \\Rightarrow 0.25v_{top}^2 = 8.58$$<br>$$v_{top}^2 = 34.32 \\Rightarrow v_{top} = \\sqrt{34.32} \\approx 5.858\\text{ m/s}$$<br>有効数字2桁に丸めると $5.9\\text{ m/s}$ です。",
+          rubric: [
+            { desc: "最高点での位置エネルギー (mgh) と運動エネルギーの和の保存則を正しく立式している", pts: 2 },
+            { desc: "数値代入と平方根の展開計算を正しく行っている", pts: 1 },
+            { desc: "正しい最終速さ 5.9 m/s (単位含む) を導出している", pts: 1 }
+          ]
+        },
+        {
+          q: "Q22-(b)(iii) 最高点を通過する瞬間に、小物体に作用している「すべての力」を示す自由体図（Free-Body Diagram）を言葉または図で説明しなさい。",
+          points: 3,
+          ans: "<b>模範解答:</b><br>最高点を通過する瞬間、小物体に作用する力は以下の2つのみです。<br>1. <b>重力 (mg)</b>: 鉛直下向き<br>2. <b>垂直抗力 (N)</b>: レールの壁面から受ける鉛直下向きの力<br>これらはともに<b>鉛直下向き（中心方向）</b>に作用しており、これらの合力が等速円運動の向心力として働きます（※遠心力や独立した向心力を力として図に描いてはなりません）。",
+          rubric: [
+            { desc: "重力(鉛直下向き)を正しく挙げている", pts: 1 },
+            { desc: "垂直抗力(鉛直下向き/レールから受ける)を正しく挙げている", pts: 1 },
+            { desc: "不要な力（向心力そのものや遠心力など）を排除した記述となっている", pts: 1 }
+          ]
+        },
+        {
+          q: "Q22-(b)(iv) 最高点において、小物体がレールから受ける垂直抗力 $N\\text{ [N]}$ の大きさを求めよ。また、小物体はループから離れずに安全に最高点を通過できているかを判断し、理由とともに説明しなさい。",
+          points: 4,
+          ans: "<b>正解:</b> 垂直抗力の大きさは $38\\text{ N}$。ループから離れずに安全に通過できている。<br><b>計算プロセス:</b><br>最高点における鉛直下向きを正とする円運動の運動方程式：<br>$$m\\frac{v_{top}^2}{R} = mg + N \\Rightarrow N = m\\left(\\frac{v_{top}^2}{R} - g\\right)$$<br>数値を代入すると：<br>$$N = 0.50 \\times \\left(\\frac{34.32}{0.40} - 9.8\\right) = 0.50 \\times (85.8 - 9.8) = 0.50 \\times 76.0 = 38\\text{ N}$$<br><b>判断:</b> レールから受ける垂直抗力 $N = 38\\text{ N}$ は正の値 ($N > 0$) です。これは小物体がまだレールに押し付けられていることを意味し、レールとの接触を失っていない（浮き上がっていない）ため、安全に通過できていると判断できます。",
+          rubric: [
+            { desc: "最高点における運動方程式 (m*v²/R = mg + N) を正しく立式している", pts: 2 },
+            { desc: "垂直抗力 N = 38 N (単位含む) を正しく算出している", pts: 1 },
+            { desc: "N > 0 であるためレールから離れないという判断と物理的理由を述べている", pts: 1 }
+          ]
+        },
+        {
+          q: "Q22-(c)(i) 粗い水平な摩擦区間に進入した。この区間の動摩擦係数を $\\mu_d = 0.30$ とするとき、この摩擦区間を通過する間に、動摩擦力が小物体にする仕事 $W_f\\text{ [J]}$ を求めよ。",
+          points: 3,
+          ans: "<b>正解:</b> $-2.9\\text{ J}$（または $-2.94\\text{ J}$）<br><b>計算プロセス:</b><br>小物体が受ける垂直抗力は $F_N = mg = 0.50 \\times 9.8 = 4.9\\text{ N}$。<br>動摩擦力は $f = \\mu_d F_N = 0.30 \\times 4.9 = 1.47\\text{ N}$。<br>動摩擦力は運動方向と常に逆向きに作用するため、する仕事 $W_f$ は負になります：<br>$$W_f = -f \\cdot L = -1.47 \\times 2.0 = -2.94\\text{ J}$$<br>有効数字2桁に丸めると $-2.9\\text{ J}$ です。",
+          rubric: [
+            { desc: "動摩擦力の大きさ (f = 1.47 N) を正しく計算している", pts: 1 },
+            { desc: "仕事が負 (マイナス) になることを反映し、Wf = -f * L に代入している", pts: 1 },
+            { desc: "正しい計算結果 -2.9 J または -2.94 J (マイナス符合と単位含む) を導出している", pts: 1 }
+          ]
+        },
+        {
+          q: "Q22-(c)(ii) この摩擦区間を通過し終えた直後の小物体の速さ $v_f\\text{ [m/s]}$ を求めよ。",
+          points: 3,
+          ans: "<b>正解:</b> $6.2\\text{ m/s}$（または $6.18\\text{ m/s}$）<br><b>計算プロセス:</b><br>摩擦区間を通過し終えた直後の運動エネルギーを $K_f$ とすると、仕事とエネルギーの関係より：<br>$$K_f = K_i + W_f \\Rightarrow \\frac{1}{2}mv_f^2 = 12.5 + (-2.94) = 9.56\\text{ J}$$<br>$$0.25 v_f^2 = 9.56 \\Rightarrow v_f^2 = 38.24 \\Rightarrow v_f = \\sqrt{38.24} \\approx 6.18\\text{ m/s}$$<br>有効数字2桁に丸めると $6.2\\text{ m/s}$ です。",
+          rubric: [
+            { desc: "仕事によるエネルギー変化の収支式 (Kf = Ki + Wf) を正しく立てている", pts: 1 },
+            { desc: "vf² = 38.24 から平方根の計算を行っている", pts: 1 },
+            { desc: "正しい最終速度 6.2 m/s (単位含む) を導出している", pts: 1 }
+          ]
+        }
+      ],
+      group4_23: [
+        {
+          q: "Q23-(a)(i) 衝突前後の速度の関係を表す、運動量保存則の式と、反発係数（はね返り係数）の定義式を、衝突直後の小球A、Bの速度 $v_A', v_B'$ を用いて立式しなさい。",
+          points: 4,
+          ans: "<b>模範解答:</b><br>衝突前の小球Aの速度を $v_A = 6.0\\text{ m/s}$、静止していた小球Bの速度を $v_B = 0\\text{ m/s}$ とします。<br><b>運動量保存則:</b><br>$$m_A v_A + m_B v_B = m_A v_A' + m_B v_B' \\Rightarrow 2.0 \\times 6.0 + 0 = 2.0v_A' + 3.0v_B'$$<br>$$2v_A' + 3v_B' = 12.0 \\quad \\longrightarrow(\\text{式}1)$$<br><b>反発係数の式:</b><br>$$e = -\\frac{v_A' - v_B'}{v_A - v_B} \\Rightarrow 0.50 = -\\frac{v_A' - v_B'}{6.0 - 0}$$<br>$$v_B' - v_A' = 3.0 \\quad \\longrightarrow(\\text{式}2)$$<br>この2つの式を用いて衝突後の速度を決定します。",
+          rubric: [
+            { desc: "運動量保存則を正しく立式し、数値を代入している (2vA' + 3vB' = 12.0)", pts: 2 },
+            { desc: "反発係数の定義式を正しく適用し立式している (vB' - vA' = 3.0)", pts: 2 }
+          ]
+        },
+        {
+          q: "Q23-(a)(ii) 衝突直後の小球Aの速度 $v_A'\\text{ [m/s]}$ および小球Bの速度 $v_B'\\text{ [m/s]}$ をそれぞれ求めよ（運動の向きも明記すること）。",
+          points: 6,
+          ans: "<b>正解:</b> 小球Aの速度: $0.60\\text{ m/s}$ (右向き) 、小球Bの速度: $3.6\\text{ m/s}$ (右向き)<br><b>計算プロセス:</b><br>（式2）より $v_A' = v_B' - 3.0$。これを（式1）に代入すると：<br>$$2(v_B' - 3.0) + 3v_B' = 12.0 \\Rightarrow 5v_B' - 6.0 = 12.0$$<br>$$5v_B' = 18.0 \\Rightarrow v_B' = 3.6\\text{ m/s}$$<br>これを代入して小球Aの速度を求めると：<br>$$v_A' = 3.6 - 3.0 = 0.60\\text{ m/s}$$<br>符号は両方ともプラスであるため、運動の向きはともに「<b>右向き</b>」です。",
+          rubric: [
+            { desc: "連立方程式を代入法等により正しく展開している", pts: 2 },
+            { desc: "小球Aの速度 0.60 m/s および「右向き」を正しく導出している", pts: 2 },
+            { desc: "小球Bの速度 3.6 m/s および「右向き」を正しく導出している", pts: 2 }
+          ]
+        },
+        {
+          q: "Q23-(b)(i) 衝突によって減少した、2球からなる物体系全体の運動エネルギーの変化量（減少量） $\\Delta K\\text{ [J]}$ を求めよ。",
+          points: 4,
+          ans: "<b>正解:</b> $16\\text{ J}$（または $16.2\\text{ J}$）<br><b>計算プロセス:</b><br>衝突前後の全運動エネルギーを算出し比較します。<br>・衝突前の運動エネルギー：<br>$$K_{before} = \\frac{1}{2}m_A v_A^2 = \\frac{1}{2} \\times 2.0 \\times (6.0)^2 = 36.0\\text{ J}$$<br>・衝突後の運動エネルギー：<br>$$K_{after} = \\frac{1}{2}m_A (v_A')^2 + \\frac{1}{2}m_B (v_B')^2 = \\frac{1}{2} \\times 2.0 \\times (0.60)^2 + ...$$<br>$$K_{after} = 0.36 + \\frac{1}{2} \\times 3.0 \\times (3.6)^2 = 0.36 + 1.5 \\times 12.96 = 19.8\\text{ J}$$<br>・減少量 $\\Delta K$ は：<br>$$\\Delta K = K_{before} - K_{after} = 36.0 - 19.8 = 16.2\\text{ J}$$<br>有効数字2桁に丸めると $16\\text{ J}$ です。",
+          rubric: [
+            { desc: "衝突前のエネルギー 36.0 J と衝突後のエネルギー 19.8 J を正しく求めている", pts: 2 },
+            { desc: "それらの差分から、減少量 16 J または 16.2 J (単位含む) を正しく算出している", pts: 2 }
+          ]
+        },
+        {
+          q: "Q23-(b)(ii) 衝突の際、小球同士が接触していた時間が $\\Delta t = 0.040\\text{ s}$ であった。この衝突の間に、小球Bが小球Aから受けた水平方向の平均の力 $F_{avg}\\text{ [N]}$ の大きさを求めよ。",
+          points: 3,
+          ans: "<b>正解:</b> $2.7 \\times 10^2\\text{ N}$（または $270\\text{ N}$）<br><b>計算プロセス:</b><br>力積と運動量の関係 $F_{avg} \\Delta t = \\Delta p$ より、小球Bに着目して求めます：<br>$$F_{avg} \\times 0.040 = m_B v_B' - m_B v_B$$<br>$$F_{avg} \\times 0.040 = 3.0 \\times 3.6 - 0 = 10.8\\text{ N}\\cdot\\text{s}$$<br>$$F_{avg} = \\frac{10.8}{0.040} = 270\\text{ N}$$<br>有効数字2桁に丸めると $2.7 \\times 10^2\\text{ N}$（または $270\\text{ N}$）です。",
+          rubric: [
+            { desc: "力積と運動量の変化量の関係式を適用して数値を正しく代入している", pts: 1.5 },
+            { desc: "計算を実行し、正しい平均力 270 N または 2.7 * 10^2 N (単位含む) を導出している", pts: 1.5 }
+          ]
+        },
+        {
+          q: "Q23-(b)(iii) この衝突現象において、力学的エネルギーは保存されているか。「弾性衝突」「非弾性衝突」「完全非弾性衝突」のいずれに分類されるかも含めて、物理的な観点から説明しなさい。",
+          points: 2,
+          ans: "<b>模範解答:</b><br>この衝突では、物体系全体の運動エネルギーが衝突前後で減少しており、保存されていません（$\\Delta K = 16.2\\text{ J}$ のエネルギーが熱や音、変形の仕事に変換）。反発係数が $e = 0.50$ ($0 < e < 1$) であるため、この衝突は「<b>非弾性衝突</b>」に分類されます。",
+          rubric: [
+            { desc: "エネルギーが減少して保存されていないことに言及している", pts: 1 },
+            { desc: "e の値に基づき「非弾性衝突」に分類している", pts: 1 }
+          ]
+        },
+        {
+          q: "Q23-(c)(i) 小球Bを円錐振り子運動させたとき、ひもが鉛直方向となす角度を $\\theta$ とする。このときの $\\sin\\theta$ および $\\cos\\theta$ の値を求めよ。",
+          points: 2,
+          ans: "<b>正解:</b> $\\sin\\theta = 0.60$、 $\\cos\\theta = 0.80$<br><b>計算プロセス:</b><br>天井からのおもりのひもの長さ $L = 1.6\\text{ m}$、軌道の半径 $r = 0.96\\text{ m}$ であるため、直角三角形の幾何関係より：<br>$$\\sin\\theta = \\frac{r}{L} = \\frac{0.96}{1.6} = 0.60$$<br>三角比の相互関係式 $\\sin^2\\theta + \\cos^2\\theta = 1$ より：<br>$$\\cos\\theta = \\sqrt{1 - (0.60)^2} = \\sqrt{0.64} = 0.80$$",
+          rubric: [
+            { desc: "sinθ = 0.60 を幾何的関係から正しく求めている", pts: 1 },
+            { desc: "cosθ = 0.80 を三角比の関係式等から正しく求めている", pts: 1 }
+          ]
+        },
+        {
+          q: "Q23-(c)(ii) 小球Bは鉛直方向には動かず、水平面内で等速円運動を維持している。ひもが小球Bを引く張力の大きさ $T\\text{ [N]}$ を求めよ。",
+          points: 2,
+          ans: "<b>正解:</b> $37\\text{ N}$（または $36.75\\text{ N}$）<br><b>計算プロセス:</b><br>小球Bは鉛直方向には静止しているため、張力の鉛直上向き成分 $T \\cos\\theta$ と重力 $m_B g$ が釣り合っています。<br>$$T \\cos\\theta = m_B g$$<br>値を代入すると：<br>$$T \\times 0.80 = 3.0 \\times 9.8 = 29.4\\text{ N}$$<br>$$T = \\frac{29.4}{0.80} = 36.75\\text{ N}$$<br>有効数字2桁に丸めると $37\\text{ N}$ です。",
+          rubric: [
+            { desc: "鉛直方向の力のつり合いの式 (T * cosθ = mg) を正しく立式している", pts: 1 },
+            { desc: "正しい張力 37 N または 36.75 N (単位含む) を導出している", pts: 1 }
+          ]
+        },
+        {
+          q: "Q23-(c)(iii) このときの円錐振り子の回転の角速度 $\\omega\\text{ [rad/s]}$ を求めよ。",
+          points: 2,
+          ans: "<b>正解:</b> $2.8\\text{ rad/s}$（または $2.77\\text{ rad/s}$）<br><b>計算プロセス:</b><br>小球Bの水平面内における円運動の運動方程式（中心方向を正とする）：<br>$$m_B r \\omega^2 = T \\sin\\theta$$<br>数値を代入すると：<br>$$3.0 \\times 0.96 \\times \\omega^2 = 36.75 \\times 0.60$$<br>$$2.88 \\omega^2 = 22.05 \\Rightarrow \\omega^2 = 7.656$$<br>$$\\omega = \\sqrt{7.656} \\approx 2.767\\text{ rad/s}$$<br>有効数字2桁に丸めると $2.8\\text{ rad/s}$ となります。<br>（※単振動の周期等との類似関係から $\\omega^2 = \\frac{g}{L\\cos\\theta}$ を用いて求めても同じ結果となります）",
+          rubric: [
+            { desc: "円運動の式を用いて、数値を正しく代入し立式している", pts: 1 },
+            { desc: "平方根を展開し、正しい角速度 2.8 rad/s (単位含む) を導出している", pts: 1 }
+          ]
+        }
+      ]
+    };
+
+    // Initialize UI
+    window.addEventListener('DOMContentLoaded', () => {
+      initNavigation();
+      initCalcQuestions();
+      initMcqQuestions();
+      initDescriptiveQuestions();
+      updateProgressUI();
+    });
+
+    // Theme logic helper
+    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      document.documentElement.classList.add('dark');
+    }
+
+    // Tab switcher (Both desktop & mobile layout support)
+    function initNavigation() {
+      const allTabBtns = document.querySelectorAll('.tab-btn, .mobile-tab-btn');
+      
+      allTabBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const targetTabId = btn.getAttribute('data-tab');
+          
+          // Switch tab contents
+          document.querySelectorAll('.tab-content').forEach(content => {
+            content.classList.remove('active');
+          });
+          document.getElementById(targetTabId).classList.add('active');
+
+          // Style tabs
+          allTabBtns.forEach(b => {
+            if (b.getAttribute('data-tab') === targetTabId) {
+              b.classList.add('active-tab', 'text-brand-600', 'dark:text-white');
+              b.classList.remove('text-slate-600', 'text-slate-400', 'dark:text-slate-500');
+              if(b.classList.contains('tab-btn')) {
+                b.classList.add('bg-white', 'dark:bg-slate-700', 'shadow-sm');
+              }
+            } else {
+              b.classList.remove('active-tab', 'text-brand-600', 'dark:text-white', 'bg-white', 'dark:bg-slate-700', 'shadow-sm');
+              b.classList.add('text-slate-600', 'dark:text-slate-300');
+              if(b.classList.contains('mobile-tab-btn')) {
+                b.classList.add('text-slate-400', 'dark:text-slate-500');
+              }
+            }
+          });
+        });
+      });
+    }
+
+    // 大問1 Logic: Calculation Assistant
+    function initCalcQuestions() {
+      const container = document.querySelector('.grid-cols-5'); // Q nav wrapper
+      const temp = document.getElementById('calc-nav-btn-temp');
+      container.innerHTML = '';
+
+      calcQuestions.forEach((q, i) => {
+        const clone = temp.content.cloneNode(true);
+        const btn = clone.querySelector('button');
+        btn.setAttribute('data-idx', i);
+        btn.querySelector('.btn-lbl').textContent = q.idx;
+        
+        if (i === AppState.activeCalcIdx) {
+          btn.classList.add('bg-brand-600', 'text-white', 'border-brand-600');
+        } else {
+          btn.classList.add('bg-slate-50', 'dark:bg-slate-900', 'border-slate-200', 'dark:border-slate-800', 'text-slate-700', 'dark:text-slate-300');
+        }
+
+        btn.addEventListener('click', () => {
+          AppState.activeCalcIdx = i;
+          renderActiveCalcQuestion();
+          updateCalcNavStyles();
+        });
+
+        container.appendChild(clone);
+      });
+
+      renderActiveCalcQuestion();
+      renderFormulaList();
+    }
+
+    function updateCalcNavStyles() {
+      const buttons = document.querySelectorAll('.calc-nav-btn');
+      buttons.forEach((btn, idx) => {
+        btn.classList.remove('bg-brand-600', 'text-white', 'border-brand-600', 'bg-slate-50', 'dark:bg-slate-900', 'border-slate-200', 'dark:border-slate-800', 'text-slate-700', 'dark:text-slate-300');
+        if (idx === AppState.activeCalcIdx) {
+          btn.classList.add('bg-brand-600', 'text-white', 'border-brand-600');
+        } else {
+          btn.classList.add('bg-slate-50', 'dark:bg-slate-900', 'border-slate-200', 'dark:border-slate-800', 'text-slate-700', 'dark:text-slate-300');
+        }
+
+        // Show dot if completed
+        const dot = btn.querySelector('#status-dot');
+        if (AppState.userProgress.calc[idx]) {
+          dot.classList.remove('hidden');
+        } else {
+          dot.classList.add('hidden');
+        }
+      });
+    }
+
+    function renderActiveCalcQuestion() {
+      const q = calcQuestions[AppState.activeCalcIdx];
+      document.getElementById('problemCategory').textContent = q.category;
+      document.getElementById('problemProgress').textContent = `問 ${q.idx} / 10`;
+      
+      const statementEl = document.getElementById('problemStatement');
+      statementEl.innerHTML = q.statement;
+
+      // Reset buffer view
+      AppState.bufferValue = null;
+      document.getElementById('bufferedValue').textContent = '-';
+      document.getElementById('bufferedValue').className = 'font-mono font-bold text-slate-400 bg-white dark:bg-slate-800 px-1.5 py-0.5 rounded ml-1 border border-slate-200 dark:border-slate-700';
+
+      // Attach click events on numbers
+      const badges = statementEl.querySelectorAll('.num-badge');
+      badges.forEach(badge => {
+        badge.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const val = badge.getAttribute('data-val');
+          AppState.bufferValue = parseFloat(val);
+          
+          // Flash animation and update buffer text
+          const bufEl = document.getElementById('bufferedValue');
+          bufEl.textContent = val;
+          bufEl.className = 'font-mono font-bold text-white bg-brand-500 px-1.5 py-0.5 rounded ml-1 animate-pulse border border-brand-500';
+
+          // If a slot is selected, put it instantly
+          if(AppState.selectedSlotId) {
+            const inputField = document.getElementById(`slot-input-${AppState.selectedSlotId}`);
+            if (inputField) {
+              inputField.value = val;
+              inputField.dispatchEvent(new Event('input'));
+              // Visual feedback on targeted input
+              inputField.classList.add('ring-2', 'ring-emerald-500');
+              setTimeout(() => inputField.classList.remove('ring-2', 'ring-emerald-500'), 400);
+            }
+          }
+        });
+      });
+
+      // Answer input reset
+      document.getElementById('calcUserAnswer').value = '';
+      document.getElementById('calcAlertMsg').classList.add('hidden');
+      
+      // Toggle commentary card
+      const compCard = document.getElementById('calcCommentaryCard');
+      if (AppState.userProgress.calc[AppState.activeCalcIdx]) {
+        compCard.classList.remove('hidden');
+        document.getElementById('calcCorrectVal').textContent = `正解: ${q.targetValue} ${q.unit}`;
+        document.getElementById('calcCommentaryText').innerHTML = q.commentary;
+        MathJax.typesetPromise([document.getElementById('calcCommentaryText')]);
+      } else {
+        compCard.classList.add('hidden');
+      }
+
+      // Deselect formula
+      AppState.activeCalcFormula = null;
+      AppState.selectedSlotId = null;
+      document.getElementById('activeFormulaTex').innerHTML = "STEP 1から公式を選択してください";
+      document.getElementById('variableSlotsContainer').innerHTML = '';
+      document.getElementById('calculateFormulaBtn').setAttribute('disabled', 'true');
+
+      updateCalcNavStyles();
+    }
+
+    function renderFormulaList() {
+      const listContainer = document.getElementById('calcFormulaList');
+      listContainer.innerHTML = '';
+
+      formulaSheet.forEach(formula => {
+        const card = document.createElement('div');
+        card.className = "p-2.5 border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 rounded-lg text-xs font-semibold hover:border-brand-500 cursor-pointer text-center transition flex flex-col justify-center gap-1";
+        card.innerHTML = `
+          <div class="text-[10px] text-slate-400 font-mono">${formula.name}</div>
+          <div class="font-mono text-slate-800 dark:text-slate-100">$${formula.tex}$</div>
+        `;
+
+        card.addEventListener('click', () => {
+          // Deselect others
+          document.querySelectorAll('#calcFormulaList > div').forEach(c => c.classList.remove('ring-2', 'ring-brand-500', 'border-brand-500', 'bg-white', 'dark:bg-slate-800'));
+          card.classList.add('ring-2', 'ring-brand-500', 'border-brand-500', 'bg-white', 'dark:bg-slate-800');
+          
+          AppState.activeCalcFormula = formula;
+          renderFormulaSlots(formula);
+        });
+
+        listContainer.appendChild(card);
+      });
+      MathJax.typesetPromise([listContainer]);
+    }
+
+    function renderFormulaSlots(formula) {
+      document.getElementById('activeFormulaTex').innerHTML = `$$${formula.tex}$$`;
+      MathJax.typesetPromise([document.getElementById('activeFormulaTex')]);
+
+      const container = document.getElementById('variableSlotsContainer');
+      container.innerHTML = '';
+
+      formula.vars.forEach(v => {
+        const slot = document.createElement('div');
+        slot.className = "flex flex-col gap-1 p-2 bg-white dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700 relative";
+        
+        slot.innerHTML = `
+          <label class="text-[10px] font-bold text-slate-400 font-mono flex justify-between">
+            <span>変数 [${v}]</span>
+            <span class="slot-target text-emerald-500 hidden">● 代入先</span>
+          </label>
+          <input type="number" step="any" id="slot-input-${v}" placeholder="タップして代入" class="slot-field w-full text-sm font-bold font-mono bg-slate-50 dark:bg-slate-900 p-1 border border-slate-200 dark:border-slate-800 rounded outline-none focus:ring-1 focus:ring-brand-500">
+        `;
+
+        const input = slot.querySelector('input');
+        
+        // Tap/click highlights slot as target
+        input.addEventListener('focus', () => {
+          AppState.selectedSlotId = v;
+          document.querySelectorAll('.slot-target').forEach(el => el.classList.add('hidden'));
+          slot.querySelector('.slot-target').classList.remove('hidden');
+        });
+
+        // Toggle calculate button state on changes
+        input.addEventListener('input', () => {
+          checkCalculateButtonState(formula);
+        });
+
+        container.appendChild(slot);
+      });
+
+      checkCalculateButtonState(formula);
+    }
+
+    function checkCalculateButtonState(formula) {
+      const fields = formula.vars.map(v => document.getElementById(`slot-input-${v}`));
+      const filledCount = fields.filter(f => f && f.value !== '').length;
+      const calcBtn = document.getElementById('calculateFormulaBtn');
+
+      // We need exactly (n-1) fields filled to compute the remaining 1 field
+      if (filledCount === formula.vars.length - 1) {
+        calcBtn.removeAttribute('disabled');
+        calcBtn.className = "flex-1 bg-brand-600 hover:bg-brand-700 text-white py-2.5 rounded-lg text-xs font-bold transition flex items-center justify-center gap-1 shadow-md shadow-brand-500/10";
+      } else {
+        calcBtn.setAttribute('disabled', 'true');
+        calcBtn.className = "flex-1 bg-slate-200 dark:bg-slate-800 text-slate-400 py-2.5 rounded-lg text-xs font-bold cursor-not-allowed transition flex items-center justify-center gap-1";
+      }
+    }
+
+    // Clear inputs logic
+    document.getElementById('clearInputsBtn').addEventListener('click', () => {
+      if(AppState.activeFormulaFormula) {
+        AppState.activeFormulaFormula.vars.forEach(v => {
+          const field = document.getElementById(`slot-input-${v}`);
+          if (field) field.value = '';
+        });
+        checkCalculateButtonState(AppState.activeFormulaFormula);
+      } else {
+        document.querySelectorAll('.slot-field').forEach(f => f.value = '');
+      }
+    });
+
+    // Solve formula instantly
+    document.getElementById('calculateFormulaBtn').addEventListener('click', () => {
+      if(!AppState.activeCalcFormula) return;
+      
+      const formula = AppState.activeCalcFormula;
+      const inputs = {};
+      let targetVar = null;
+
+      formula.vars.forEach(v => {
+        const val = document.getElementById(`slot-input-${v}`).value;
+        if (val === '') {
+          targetVar = v;
+          inputs[v] = null;
+        } else {
+          inputs[v] = parseFloat(val);
+        }
+      });
+
+      if (targetVar) {
+        const computed = formula.calc(inputs);
+        if (computed !== null && !isNaN(computed)) {
+          const targetField = document.getElementById(`slot-input-${targetVar}`);
+          // Round computed values to look premium
+          const formatted = parseFloat(computed.toFixed(4));
+          targetField.value = formatted;
+          targetField.classList.add('bg-emerald-50', 'dark:bg-emerald-950/40', 'border-emerald-500', 'text-emerald-600');
+          
+          // Animate slot highlight
+          targetField.parentElement.classList.add('ring-2', 'ring-emerald-400');
+          setTimeout(() => {
+            targetField.parentElement.classList.remove('ring-2', 'ring-emerald-400');
+          }, 600);
+
+          // Copy calculated answer to verify answers field for convenience
+          // round to 2 sig figs or match target physics requirements
+          let userVal = computed;
+          if (AppState.activeCalcIdx === 2) { // Job is 260
+            userVal = Math.round(computed / 10) * 10;
+          } else {
+            userVal = parseFloat(computed.toPrecision(2));
+          }
+          document.getElementById('calcUserAnswer').value = userVal;
+        }
+      }
+    });
+
+    // Verification Logic
+    document.getElementById('verifyAnswerBtn').addEventListener('click', () => {
+      const userAnsStr = document.getElementById('calcUserAnswer').value.trim();
+      const alertEl = document.getElementById('calcAlertMsg');
+      
+      if (!userAnsStr) {
+        alertEl.textContent = "解答欄が空です。数値を入力してください。";
+        alertEl.className = "mt-4 p-3 rounded-lg text-sm bg-rose-50 dark:bg-rose-950/30 text-rose-800 dark:text-rose-400 border border-rose-100 dark:border-rose-900/50 block";
+        return;
+      }
+
+      const q = calcQuestions[AppState.activeCalcIdx];
+      const userAns = parseFloat(userAnsStr);
+
+      // Validate matching within simple precision tolerance (effective 2 sig figs)
+      let isCorrect = false;
+      if (q.targetValue >= 100) {
+        // e.g. target 260 vs user 260 or 261
+        isCorrect = Math.abs(userAns - q.targetValue) <= 10;
+      } else {
+        isCorrect = Math.abs(userAns - q.targetValue) <= 0.1;
+      }
+
+      if (isCorrect) {
+        alertEl.innerHTML = `<strong>正解！</strong> 正解値は <strong>${q.targetValue} ${q.unit}</strong> です。下部の詳細解説をチェックしましょう。`;
+        alertEl.className = "mt-4 p-3 rounded-lg text-sm bg-emerald-50 dark:bg-emerald-950/30 text-emerald-800 dark:text-emerald-400 border border-emerald-100 dark:border-emerald-900/50 block";
+        
+        AppState.userProgress.calc[AppState.activeCalcIdx] = true;
+        saveProgress();
+        renderActiveCalcQuestion(); // Refreshes commentary show
+      } else {
+        alertEl.innerHTML = `<strong>不正解...</strong> 入力された値 ${userAns} は、予想される有効数字2桁の計算結果と異なります。立式や公式を見直してください。`;
+        alertEl.className = "mt-4 p-3 rounded-lg text-sm bg-rose-50 dark:bg-rose-950/30 text-rose-800 dark:text-rose-400 border border-rose-100 dark:border-rose-900/50 block";
+      }
+    });
+
+
+    // 大問2 Logic: MCQ Area
+    function initMcqQuestions() {
+      const container = document.querySelector('.lg\\:col-span-4 .grid-cols-5');
+      const temp = document.getElementById('mcq-nav-btn-temp');
+      container.innerHTML = '';
+
+      mcqQuestions.forEach((q, i) => {
+        const clone = temp.content.cloneNode(true);
+        const btn = clone.querySelector('button');
+        btn.setAttribute('data-idx', i);
+        btn.querySelector('.mcq-btn-lbl').textContent = q.idx;
+
+        if (i === AppState.activeMcqIdx) {
+          btn.classList.add('bg-brand-600', 'text-white', 'border-brand-600');
+        } else {
+          btn.classList.add('bg-slate-50', 'dark:bg-slate-900', 'border-slate-200', 'dark:border-slate-800', 'text-slate-700', 'dark:text-slate-300');
+        }
+
+        btn.addEventListener('click', () => {
+          AppState.activeMcqIdx = i;
+          renderMCQ();
+          updateMCQNavStyles();
+        });
+
+        container.appendChild(clone);
+      });
+
+      renderMCQ();
+    }
+
+    function updateMCQNavStyles() {
+      const buttons = document.querySelectorAll('.mcq-nav-btn');
+      let scoreCount = 0;
+
+      buttons.forEach((btn, idx) => {
+        btn.classList.remove('bg-brand-600', 'text-white', 'border-brand-600', 'bg-slate-50', 'dark:bg-slate-900', 'border-slate-200', 'dark:border-slate-800', 'text-slate-700', 'dark:text-slate-300');
+        if (idx === AppState.activeMcqIdx) {
+          btn.classList.add('bg-brand-600', 'text-white', 'border-brand-600');
+        } else {
+          btn.classList.add('bg-slate-50', 'dark:bg-slate-900', 'border-slate-200', 'dark:border-slate-800', 'text-slate-700', 'dark:text-slate-300');
+        }
+
+        // Show status dot & calculate score
+        const dot = btn.querySelector('#mcq-status-dot');
+        const savedAnswer = AppState.userProgress.mcq[idx];
+        if (savedAnswer !== null) {
+          dot.classList.remove('hidden');
+          if (savedAnswer === mcqQuestions[idx].answerIdx) {
+            scoreCount++;
+            dot.className = "absolute bottom-1 right-1 w-1.5 h-1.5 rounded-full bg-emerald-500";
+          } else {
+            dot.className = "absolute bottom-1 right-1 w-1.5 h-1.5 rounded-full bg-rose-500";
+          }
+        } else {
+          dot.classList.add('hidden');
+        }
+      });
+
+      document.getElementById('mcqScoreLabel').textContent = `${scoreCount} / 10 正解`;
+    }
+
+    function renderMCQ() {
+      const q = mcqQuestions[AppState.activeMcqIdx];
+      document.getElementById('mcqProgress').textContent = `問 ${q.idx} / 20 (大問2-${q.idx - 10})`;
+      
+      const statementEl = document.getElementById('mcqStatement');
+      statementEl.textContent = q.statement;
+
+      const choicesContainer = document.getElementById('mcqChoicesContainer');
+      choicesContainer.innerHTML = '';
+
+      const savedSelection = AppState.userProgress.mcq[AppState.activeMcqIdx];
+
+      q.choices.forEach((choice, idx) => {
+        const option = document.createElement('button');
+        option.className = "w-full text-left p-4 rounded-xl border font-medium text-sm transition flex items-center justify-between group cursor-pointer ";
+        
+        let labelChar = String.fromCharCode(65 + idx); // A, B, C, D
+        option.innerHTML = `
+          <span class="flex items-center gap-3">
+            <span class="w-6 h-6 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 flex items-center justify-center font-bold text-xs group-hover:bg-brand-100 group-hover:text-brand-700 dark:group-hover:bg-slate-700 dark:group-hover:text-white transition">${labelChar}</span>
+            <span>${choice}</span>
+          </span>
+          <span class="option-indicator w-4 h-4 rounded-full border border-slate-300 flex items-center justify-center text-[10px]"></span>
+        `;
+
+        // If already selected, style it
+        if (savedSelection !== null) {
+          option.setAttribute('disabled', 'true');
+          option.classList.add('cursor-not-allowed');
+          if (idx === q.answerIdx) {
+            // Correct answer
+            option.classList.add('bg-emerald-50', 'dark:bg-emerald-950/30', 'border-emerald-300', 'dark:border-emerald-800', 'text-emerald-900', 'dark:text-emerald-300');
+            option.querySelector('.option-indicator').className = "w-5 h-5 rounded-full bg-emerald-500 text-white flex items-center justify-center text-[10px] border-none";
+            option.querySelector('.option-indicator').innerHTML = "✓";
+          } else if (idx === savedSelection) {
+            // Wrong selected answer
+            option.classList.add('bg-rose-50', 'dark:bg-rose-950/30', 'border-rose-300', 'dark:border-rose-800', 'text-rose-900', 'dark:text-rose-300');
+            option.querySelector('.option-indicator').className = "w-5 h-5 rounded-full bg-rose-500 text-white flex items-center justify-center text-[10px] border-none";
+            option.querySelector('.option-indicator').innerHTML = "✕";
+          } else {
+            option.classList.add('border-slate-200', 'dark:border-slate-800', 'opacity-60');
+          }
+        } else {
+          option.classList.add('bg-white', 'dark:bg-slate-900', 'border-slate-200', 'dark:border-slate-800', 'hover:border-brand-500', 'hover:bg-brand-50/20');
+          
+          option.addEventListener('click', () => {
+            AppState.userProgress.mcq[AppState.activeMcqIdx] = idx;
+            saveProgress();
+            renderMCQ();
+          });
+        }
+
+        choicesContainer.appendChild(option);
+      });
+
+      // Feedback block
+      const feedbackEl = document.getElementById('mcqFeedback');
+      if (savedSelection !== null) {
+        feedbackEl.classList.remove('hidden');
+        const bodyText = feedbackEl.querySelector('#mcqFeedbackBody');
+        const titleText = feedbackEl.querySelector('#mcqFeedbackTitle');
+        const iconContainer = feedbackEl.querySelector('#mcqFeedbackIcon');
+        
+        bodyText.innerHTML = q.explanation;
+        MathJax.typesetPromise([bodyText]);
+
+        if (savedSelection === q.answerIdx) {
+          feedbackEl.className = "mt-6 p-4 rounded-xl border border-emerald-200 dark:border-emerald-900/50 bg-emerald-50/50 dark:bg-emerald-950/20";
+          titleText.textContent = "正解！";
+          titleText.className = "font-bold text-emerald-900 dark:text-emerald-300 mb-1";
+          iconContainer.className = "w-6 h-6 rounded-full flex items-center justify-center bg-emerald-500 text-white font-bold flex-shrink-0 text-xs";
+          iconContainer.innerHTML = "✓";
+        } else {
+          feedbackEl.className = "mt-6 p-4 rounded-xl border border-rose-200 dark:border-rose-900/50 bg-rose-50/50 dark:bg-rose-950/20";
+          titleText.textContent = "不正解...";
+          titleText.className = "font-bold text-rose-900 dark:text-rose-300 mb-1";
+          iconContainer.className = "w-6 h-6 rounded-full flex items-center justify-center bg-rose-500 text-white font-bold flex-shrink-0 text-xs";
+          iconContainer.innerHTML = "✕";
+        }
+      } else {
+        feedbackEl.classList.add('hidden');
+      }
+
+      updateMCQNavStyles();
+    }
+
+
+    // 大問3&4 Logic: Descriptive Essay Cards
+    function initDescriptiveQuestions() {
+      const groupBtns = document.querySelectorAll('.desc-group-btn');
+      
+      groupBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          groupBtns.forEach(b => {
+            b.classList.remove('active-desc-group', 'bg-white', 'dark:bg-slate-700', 'shadow-sm', 'text-brand-600', 'dark:text-white');
+            b.classList.add('text-slate-600', 'dark:text-slate-300');
+          });
+          btn.classList.add('active-desc-group', 'bg-white', 'dark:bg-slate-700', 'shadow-sm', 'text-brand-600', 'dark:text-white');
+          
+          const groupName = btn.getAttribute('data-group');
+          renderDescriptiveGroup(groupName);
+        });
+      });
+
+      renderDescriptiveGroup("group3"); // Default group
+    }
+
+    function renderDescriptiveGroup(groupName) {
+      const workspace = document.getElementById('descriptiveWorkspace');
+      workspace.innerHTML = '';
+
+      const questionsList = descriptiveQuestions[groupName];
+      
+      questionsList.forEach((q, idx) => {
+        const isCompleted = AppState.userProgress.desc[groupName.replace('-', '_')][idx];
+        const card = document.createElement('div');
+        card.className = "bg-white dark:bg-slate-950 p-5 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col gap-4";
+        
+        card.innerHTML = `
+          <div class="flex items-start justify-between gap-4">
+            <div class="flex-1">
+              <h4 class="text-sm font-bold text-slate-800 dark:text-slate-100 leading-relaxed">$${q.q}$</h4>
+            </div>
+            <span class="bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 text-[10px] px-2 py-0.5 rounded-full font-bold whitespace-nowrap">${q.points}点</span>
+          </div>
+
+          <!-- Actions -->
+          <div class="flex gap-2">
+            <button class="toggle-answer-btn flex-1 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 py-2 rounded-lg text-xs font-bold transition">
+              解答・配点基準を表示
+            </button>
+            <button class="mark-complete-btn flex-shrink-0 px-3 py-2 rounded-lg text-xs font-bold border transition flex items-center gap-1.5 ${isCompleted ? 'bg-emerald-50 border-emerald-300 text-emerald-700 dark:bg-emerald-950 dark:border-emerald-800' : 'bg-white border-slate-200 text-slate-600 dark:bg-slate-900 dark:border-slate-800'}">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"></path></svg>
+              <span>${isCompleted ? '学習完了' : '完了チェック'}</span>
+            </button>
+          </div>
+
+          <!-- Answer & Rubric Block (Hidden initially) -->
+          <div class="answer-block border-t border-slate-100 dark:border-slate-800 pt-4 hidden space-y-4">
+            <div>
+              <span class="text-xs font-bold text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/30 px-2 py-0.5 rounded">模範解答</span>
+              <div class="mt-2 text-sm leading-relaxed text-slate-600 dark:text-slate-300 select-text p-3 bg-slate-50 dark:bg-slate-900 rounded-lg">
+                ${q.ans}
+              </div>
+            </div>
+
+            <div>
+              <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">採点基準 (部分点ルーブリック)</span>
+              <div class="mt-2 border border-slate-200 dark:border-slate-800 rounded-lg overflow-hidden text-xs">
+                ${q.rubric.map(r => `
+                  <div class="flex justify-between items-center p-2.5 border-b border-slate-100 dark:border-slate-800 last:border-b-0 bg-slate-50/50 dark:bg-slate-900/50">
+                    <span class="text-slate-600 dark:text-slate-300 flex items-center gap-1.5">
+                      <span class="w-1.5 h-1.5 rounded-full bg-slate-400"></span>
+                      ${r.desc}
+                    </span>
+                    <span class="font-bold text-slate-500">[+${r.pts}点]</span>
+                  </div>
+                `).join('')}
+              </div>
+            </div>
+          </div>
+        `;
+
+        // Interactive Toggles
+        const toggleBtn = card.querySelector('.toggle-answer-btn');
+        const answerBlock = card.querySelector('.answer-block');
+        toggleBtn.addEventListener('click', () => {
+          const isHidden = answerBlock.classList.contains('hidden');
+          if(isHidden) {
+            answerBlock.classList.remove('hidden');
+            toggleBtn.textContent = "解答・配点基準を閉じる";
+          } else {
+            answerBlock.classList.add('hidden');
+            toggleBtn.textContent = "解答・配点基準を表示";
+          }
+        });
+
+        const completeBtn = card.querySelector('.mark-complete-btn');
+        completeBtn.addEventListener('click', () => {
+          const currentStatus = AppState.userProgress.desc[groupName.replace('-', '_')][idx];
+          const newStatus = !currentStatus;
+          AppState.userProgress.desc[groupName.replace('-', '_')][idx] = newStatus;
+          saveProgress();
+
+          // Toggle visual styling
+          if(newStatus) {
+            completeBtn.className = "mark-complete-btn flex-shrink-0 px-3 py-2 rounded-lg text-xs font-bold border transition flex items-center gap-1.5 bg-emerald-50 border-emerald-300 text-emerald-700 dark:bg-emerald-950 dark:border-emerald-800";
+            completeBtn.querySelector('span').textContent = '学習完了';
+          } else {
+            completeBtn.className = "mark-complete-btn flex-shrink-0 px-3 py-2 rounded-lg text-xs font-bold border transition flex items-center gap-1.5 bg-white border-slate-200 text-slate-600 dark:bg-slate-900 dark:border-slate-800";
+            completeBtn.querySelector('span').textContent = '完了チェック';
+          }
+        });
+
+        workspace.appendChild(card);
+      });
+
+      MathJax.typesetPromise([workspace]);
+    }
+
+    // UI Progress Indicator Updates
+    function updateProgressUI() {
+      // Calculation Tab
+      const calcDone = AppState.userProgress.calc.filter(Boolean).length;
+      document.getElementById('progCalc').textContent = `${calcDone} / 10`;
+
+      // MCQ Tab
+      const mcqDone = AppState.userProgress.mcq.filter(v => v !== null).length;
+      document.getElementById('progMCQ').textContent = `${mcqDone} / 10`;
+
+      // Descriptive Qs Total Count (Group 3 size = 3, Group 4-22 = 8, Group 4-23 = 8)
+      const descDoneG3 = AppState.userProgress.desc.group3.filter(Boolean).length;
+      const descDoneG422 = AppState.userProgress.desc.group4_22.filter(Boolean).length;
+      const descDoneG423 = AppState.userProgress.desc.group4_23.filter(Boolean).length;
+      const descTotal = descDoneG3 + descDoneG422 + descDoneG423;
+      
+      document.getElementById('progDesc').textContent = `${descTotal} / 19`;
+
+      // Total progress indicator calculation
+      const totalPossible = 10 + 10 + 19;
+      const totalDone = calcDone + mcqDone + descTotal;
+      const percentage = Math.round((totalDone / totalPossible) * 100);
+
+      document.getElementById('totalProgressBar').style.width = `${percentage}%`;
+      document.getElementById('totalProgressPercent').textContent = `${percentage}%`;
+    }
+  </script>
+</body>
+</html>
